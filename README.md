@@ -11,4 +11,8 @@
 
 ### 새로 알게된 것
 - local stoarage에 대한 이해
-- java script의 document.selectQuery
+    - local storage에는 string으로 저장
+- document.selectQuery
+- document.createElement
+- JSON.parse, JSON.stringify
+- OPEN API 사용

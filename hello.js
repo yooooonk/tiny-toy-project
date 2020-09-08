@@ -1,3 +1,4 @@
+
 const USER = 'user';
 const NONE = 'none';
 
@@ -5,7 +6,6 @@ const form = document.querySelector('.js-hello');
 const input = form.querySelector('input');
 const user = document.querySelector('.user');
 const nameSpan = user.querySelector('span');
-const del = user.querySelector('button');
 
 //submit 이벤트
 function handleSubmit(e){
@@ -41,7 +41,6 @@ function delUser(){
 function init(){
     const user = localStorage.getItem(USER);
 
-    del.addEventListener('click',delUser)
     form.addEventListener("submit",handleSubmit);
 
     if(user){

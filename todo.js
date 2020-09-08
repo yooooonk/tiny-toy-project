@@ -36,8 +36,6 @@ function paintTodo(todoObj){
     li.appendChild(span);
     li.appendChild(delButton);
     todoList.appendChild(li);
-
-
 }
 
 function deleteTodo(e){
@@ -52,6 +50,13 @@ function deleteTodo(e){
     saveLs();
 }
 
+function deleteAllTodo(){
+    while(todoList.hasChildNodes){
+        todoList.removeChild(todoList.firstChild);
+    }
+    localStorage.removeItem(TODO_LS);
+
+}
 function saveLs(){
     localStorage.setItem(TODO_LS,JSON.stringify(todos));
 }
