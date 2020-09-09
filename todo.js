@@ -66,7 +66,6 @@ function loadTodo(){
     if(savedList){
         savedList.forEach(todo => {
             todos.push(todo);
-            console.log(todo.id)
             maxIdNo = maxIdNo>todo.id ? maxIdNo:todo.id;
             paintTodo(todo)
         });
