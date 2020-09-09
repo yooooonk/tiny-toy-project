@@ -5,7 +5,7 @@ const NONE = 'none';
 const form = document.querySelector('.js-hello');
 const input = form.querySelector('input');
 const user = document.querySelector('.user');
-const nameSpan = user.querySelector('span');
+const nameSpan = user.querySelector('h1');
 
 //submit 이벤트
 function handleSubmit(e){

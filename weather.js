@@ -23,14 +23,12 @@ function saveCoords(coordsObj){
 function getWeather(lat, lon){
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`)
     .then(res=>{
-        console.log(res)
         return res.json();
         
     }).then(data=>{
-        console.log(data)
         const temp = data.main.temp;
         const place = data.name;
-        weather.innerText=`${temp} @ ${place}`
+        weather.innerText=`${temp}℃ @ ${place}`
     })
 }
 
