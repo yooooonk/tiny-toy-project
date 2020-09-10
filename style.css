@@ -1,13 +1,7 @@
-.none{
-    display: none;
-}
-
-.show{
-    display: block;
-}
-
-.bgImg{
-    position: absolute;
+/*화면기능*/
+.none{ display: none; }
+.show{ display: block;}
+.bgImg{ position: absolute;
     top:0;
     left:0;
     width:100%;
@@ -15,23 +9,77 @@
     z-index: -1;
 }
 
-h1 {
-    text-align: center;
+/*화면 디자인*/
+body{color:white; text-align: center;}
+.left{
+    width : 50%;
+    float: left;
 }
-h3 {
-    text-align: center;
+
+.right{
+    width : 50%;
+    float: right;
 }
-form{
+
+.container1{
+    position: absolute ;
+    top:30%;
+    left:15%;
+}
+
+.container2{
+    position: absolute ;
+    top:20%;
+    right:20%;
+}
+
+.name-input{
+    background: linear-gradient(21deg, #10abff, #1beabd);
+    border-radius: 9999em;
+    padding: 5px;
+    border : none;
+    width:300px;
+    height: 50px;
+    text-align: center;
+    color:white
+
+}
+
+.user-name{
+    background: linear-gradient(21deg, #10abff, #1beabd);
+    border-radius: 9999em;
+    padding: 5px;
+    width:300px;
+    height: 50px;
+   
+}
+
+.name-input::placeholder{
+    color:white;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 25px;
+
+}
+
+.todo-input{
+    border: none;
+    border-bottom: 2px solid white;
+    background-color: transparent;
+    color:white;
+    width:300px;
     text-align: center;
 }
 
-ul{
-    margin-left: auto;
-    margin-right: auto;
-}
-
-li{
+.todo-input::placeholder{
+    color:white;
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
+    vertical-align: middle;
+
+}
+.js-clock {font-size : 5em}
+
+button{
+    border:none;
+    background-color: transparent;
 }

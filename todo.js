@@ -28,7 +28,7 @@ function paintTodo(todoObj){
     const li = document.createElement('li');
     const span = document.createElement('span');
     const delButton = document.createElement('button');
-    delButton.innerText = 'x';
+    delButton.innerHTML = '&nbsp;&nbsp;&nbsp;&#10007';
     delButton.addEventListener("click",deleteTodo)
     span.innerText = todoObj.todo;
 
