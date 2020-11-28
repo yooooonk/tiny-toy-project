@@ -9,10 +9,14 @@
 - 이름
 - 날씨 API
 
-### 새로 알게된 것
+### 기억해야할 것
 - local stoarage에 대한 이해
     - local storage에는 string으로 저장
 - document.selectQuery
 - document.createElement
 - JSON.parse, JSON.stringify
 - OPEN API 사용
+
+![img1](https://github.com/yooooonk/TIL/blob/master/img/momentum1.PNG)
+
+![img2](https://github.com/yooooonk/TIL/blob/master/img/momentum2.PNG)
