@@ -1,0 +1,32 @@
+:root{
+    /* color */
+    --white-color: #f9f9f9;
+    --black-color: black;
+    --blue-color:#065fd4;
+    --red-color:#cc0000;
+    --grey-dark-color:#606060;
+    --grey-light-color:#909090;
+    /* size */
+    --side-padding:12px;
+    --avartar-size:36px;
+    /* font size */
+    --font-large:18px;
+    --font-medium:14px;
+    --font-small:12px;
+    --font-micro:10px;
+}
+
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+
+body{
+ 
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+}
