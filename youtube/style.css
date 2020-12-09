@@ -1,32 +1,233 @@
-:root{
-    /* color */
-    --white-color: #f9f9f9;
-    --black-color: black;
-    --blue-color:#065fd4;
-    --red-color:#cc0000;
-    --grey-dark-color:#606060;
-    --grey-light-color:#909090;
-    /* size */
-    --side-padding:12px;
-    --avartar-size:36px;
-    /* font size */
-    --font-large:18px;
-    --font-medium:14px;
-    --font-small:12px;
-    --font-micro:10px;
+:root {
+  /* color */
+  --white-color: #f9f9f9;
+  --black-color: black;
+  --blue-color: #065fd4;
+  --red-color: #cc0000;
+  --grey-dark-color: #606060;
+  --grey-light-color: #909090;
+  --line-color: #e4e4e4;
+  /* size */
+  --padding: 12px;
+  --avartar-size: 36px;
+  /* font size */
+  --font-large: 18px;
+  --font-medium: 14px;
+  --font-small: 12px;
+  --font-micro: 10px;
 }
 
-*{
-    padding:0;
-    margin:0;
-    box-sizing: border-box;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-body{
- 
+ul {
+  list-style: none;
 }
 
-header{
-    display: flex;
-    justify-content: space-between;
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--padding);
+  background-color: var(--black-color);
+  color: var(--white-color);
+}
+
+header .logo i {
+  color: var(--red-color);
+}
+
+header .icon .fa-search {
+  margin-right: var(--padding);
+}
+
+.player {
+  position: sticky;
+  top: 0;
+  text-align: center;
+  background-color: var(--black-color);
+}
+.player video {
+  width: 100%;
+  height: 100%;
+  max-width: 1000px;
+}
+
+.info {
+  padding: var(--pading);
+}
+
+.hashtags {
+  display: flex;
+  font-size: var(--font-small);
+  color: var(--blue-color);
+  margin: var(--padding) 0;
+}
+
+.hashtags li {
+  padding-right: var(--padding);
+}
+
+.info .metadata .titleAndButton {
+  margin: var(--padding) 0;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.info .metadata .titleAndButton .title {
+  font-size: var(--font-large);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.info .metadata .titleAndButton .moreBtn {
+  height: 100%;
+  background-color: transparent;
+  border: none;
+  width: 50px;
+  overflow: hidden;
+}
+
+.info .metadata .views ul {
+  display: flex;
+}
+
+.info .metadata .views li {
+  padding-right: var(--padding);
+  font-size: var(--font-small);
+  color: var(--grey-dark-color);
+}
+
+button,
+button:focus {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.info .action {
+  margin: var(--padding) 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.info .action button {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--font-small);
+  color: var(--grey-dark-color);
+}
+
+.info .action button i {
+  margin: 0 auto;
+  margin-bottom: calc(var(--padding) / 2);
+  font-size: 16px;
+}
+
+.info .action button i {
+  color: var(--blue-color);
+}
+
+.channel {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--line-color);
+  border-bottom: 1px solid var(--line-color);
+}
+
+.channel .metadata {
+  display: flex;
+}
+
+.channel .metadata img {
+  margin: var(--padding);
+  width: var(--avartar-size);
+  height: var(--avartar-size);
+  border-radius: 50%;
+}
+
+.channel .metadata .info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.channel .metadata .info .subscribes {
+  font-size: var(--font-small);
+  color: var(--grey-light-color);
+  margin: var(--padding);
+}
+
+.reply-sectoin {
+  flex-direction: column;
+}
+.reply-sectoin .header {
+  display: flex;
+
+  justify-content: space-between;
+}
+
+.reply-sectoin .header .metata {
+  font-size: var(--font-medium);
+  margin: var(--padding);
+}
+
+.reply-sectoin .header .more {
+  margin: var(--padding);
+}
+
+.more:hover {
+  cursor: pointer;
+}
+
+.reply-sectoin .write {
+  display: flex;
+  align-items: center;
+}
+
+.reply-sectoin .write img {
+  margin: var(--padding);
+  width: var(--avartar-size);
+  height: var(--avartar-size);
+  border-radius: 50%;
+}
+
+.reply-sectoin .write input {
+  width: 90%;
+  height: 30px;
+  background-color: var(--line-color);
+  border: none;
+}
+
+.reply-sectoin .write input::placeholder {
+  color: var(--grey-dark-color);
+}
+
+.upNext li {
+  display: flex;
+}
+
+.upNext li img {
+  flex: 1 1 35%;
+}
+
+.upNext li .info {
+  flex: 1 1 60%;
+}
+
+.upNext li .moreBtn {
+  flex: 1 1 5%;
+}
+
+.upNext li .channel {
+  border: none;
+}
+
+.upNext li .title {
+  font-size: var(--font-large);
 }
