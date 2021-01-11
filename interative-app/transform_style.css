@@ -1,0 +1,97 @@
+.box-contrainer {
+    display: flex;
+}
+
+.a, .b, .c, .d,.e{
+    width:100px;
+    height:100px;
+    border: solid black 1px;
+}
+
+.scale-box {
+    background: rgba(255, 255, 127, 0.623)
+}
+
+.scale-box:hover{
+    transform : scale(1.5) ;
+    transform-origin : 20% 50%
+    /* transform: translate(30px, 10px); */    
+}
+
+.rotate-box{
+    background-color: rgba(255, 192, 203, 0.664);
+}
+
+.rotate-box.a:hover{
+    transform : rotate(15deg) ;    
+}
+
+.rotate-box.b:hover{
+    transform : rotate(60deg) ;    
+}
+
+.rotate-box.c:hover{
+    transform : rotate(-15deg) ;    
+}
+
+.rotate-box.d:hover{
+    transform : rotate(-15deg) ;   
+    transform-origin: 0% 0%; 
+}
+
+.rotate-box.e:hover{
+    transform : rotate(15deg) ;   
+    transform-origin: 100% 0%; 
+}
+
+.skew-box{
+    background-color: rgba(135, 207, 235, 0.541);
+}
+
+.skew-box.a:hover{
+    transform : skew(15deg) ;    
+}
+
+.skew-box.b:hover{
+    transform : skew(60deg) ;    
+}
+
+.skew-box.c:hover{
+    transform : skew(-15deg) ;    
+}
+
+.skew-box.d:hover{
+    transform : skew(-15deg) ;   
+    transform-origin: 0% 0%; 
+}
+
+.skew-box.e:hover{
+    transform : skew(15deg) ;   
+    transform-origin: 100% 0%; 
+}
+
+.transition-box{
+    background-color: rgba(157, 135, 235, 0.541);
+}
+
+.transition-box.a:hover{
+    transform : transition(10px 30px) ;    
+}
+
+.transition-box.b:hover{
+    transform : transition(60deg) ;    
+}
+
+.transition-box.c:hover{
+    transform : transition(-15deg) ;    
+}
+
+.transition-box.d:hover{
+    transform : transition(-15deg) ;   
+    transform-origin: 0% 0%; 
+}
+
+.transition-box.e:hover{
+    transform : transition(15deg) ;   
+    transform-origin: 100% 0%; 
+}
