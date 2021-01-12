@@ -14,12 +14,13 @@
 
 .scale-box:hover{
     transform : scale(1.5) ;
-    transform-origin : 20% 50%
+    transition: all 1s linear 1s
     /* transform: translate(30px, 10px); */    
 }
 
 .rotate-box{
     background-color: rgba(255, 192, 203, 0.664);
+    transition: all 0.5s ease 0.5s
 }
 
 .rotate-box.a:hover{
@@ -46,14 +47,16 @@
 
 .skew-box{
     background-color: rgba(135, 207, 235, 0.541);
+    transition-property: width, height;
+    transition-duration: 0.3s, 0.5s;
 }
 
 .skew-box.a:hover{
-    transform : skew(15deg) ;    
+    width: 200px;    
 }
 
 .skew-box.b:hover{
-    transform : skew(60deg) ;    
+    height: 200px;
 }
 
 .skew-box.c:hover{

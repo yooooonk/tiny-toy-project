@@ -7,8 +7,8 @@
     <title>Interactive app</title>
 </head>
 <body>
-    <h1>Transform</h1>
-    <h3>scale - 1.5배, x축:20% y축:50%</h3>
+    <h1>Animation</h1>
+    <h3>transition: all 1s linear 1s</h3>
     <div class="box-contrainer">
         <div class="scale-box a">A</div>
         <div class="scale-box b">B</div>
@@ -17,7 +17,7 @@
         <div class="scale-box e">E</div>
     </div>
     
-    <h3>rotate </h3>
+    <h3>transition: all 0.5s ease 0.5s </h3>
     <div class="box-contrainer">
         <div class="rotate-box a">A 15deg</div>
         <div class="rotate-box b">B 60deg</div>
@@ -26,7 +26,9 @@
         <div class="rotate-box e">E -15deg 100% 0%</div>
     </div>
 
-    <h3>skew </h3>
+    <h3>transition-property: width, height; 
+    transition-duration: 0.3s, 0.5s; </h3>
+    
     <div class="box-contrainer">
         <div class="skew-box a">A 15deg</div>
         <div class="skew-box b">B 60deg</div>
@@ -35,13 +37,6 @@
         <div class="skew-box e">E -15deg 100% 0%</div>
     </div>
 
-    <h3>transition </h3>
-    <div class="box-contrainer">
-        <div class="transition-box a">A</div>
-        <div class="transition-box b">B</div>
-        <div class="transition-box c">C</div>
-        <div class="transition-box d">D</div>
-        <div class="transition-box e">E</div>
-    </div>
+   
 </body>
 </html>
