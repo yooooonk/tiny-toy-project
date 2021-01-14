@@ -4,24 +4,43 @@
     justify-content: center;
     width:80vw;
     height: 80vh;
-    background-color: yellow;
-    
+    background-color: yellow;    
+    perspective: 500px;
 }
 
 .card{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin:1em;
+    position:relative;    
     width:100px;
     height: 150px;
-    background-color: red;
-    border-radius: 0.5em;
-    font-size:1.5rem;
     transform:  perspective(500px)  rotateY(0deg) ;
     transition: 1s;
+    transform-style:preserve-3d;
+    transform-origin: 0%;
 }
 
-.world:hover .card{
+.card-side{    
+    position: absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height: 100%;
+    display: flex;
+    align-items: center;    
+    justify-content: center;
+    border-radius: 0.5em;
+    font-size:1.5rem;
+    backface-visibility: hidden;
+}
+
+.card-side-front{
+    z-index: 1;
+    background-color: white;    
+}
+
+.card-side-back{
+    background-color: red;
     transform: rotateY(180deg);
+}
+.world:hover .card{
+    transform: rotateY(-180deg);
 }

@@ -1,0 +1,13 @@
+.container{
+    display: flex;    
+    justify-content: flex-end;
+    height: 80vh;
+    background-color: gray;
+}
+
+.item{
+    flex-grow:1;
+    padding: 2em;
+    border:3px solid black;    
+    background-color: white;
+}
