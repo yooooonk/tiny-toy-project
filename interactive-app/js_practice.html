@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="js_practice.css">
+    <title>Animation</title>
+</head>
+<body>
+    <div class="stage">
+        <div class="yl"></div>
+        <div class="yl"></div>
+        <div class="yl"></div>
+    </div>
+
+    <script>
+        /* (function(){
+            const stage = document.querySelector('.stage')
+            
+            const clickHandler = (e)=>{
+                const yl = e.currentTarget;
+                
+                stage.removeChild(yl)
+            };
+            const yls = document.querySelectorAll('.yl');
+            
+            yls.forEach((yl)=>{                
+                yl.addEventListener('click',clickHandler)
+            }) 
+        })(); */
+        
+        // 이벤트위임
+        const stage = document.querySelector('.stage');
+        const clickHandler = (e)=>{
+            const yl = e.target;
+            if(yl !== stage){
+                stage.removeChild(yl)
+            }
+            
+        }
+        stage.addEventListener('click',clickHandler)
+
+
+    </script>
+</body>
+</html>

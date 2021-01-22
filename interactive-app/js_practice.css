@@ -1,0 +1,53 @@
+body{
+    padding: 0;
+    margin:0;
+}
+
+.stage {    
+    overflow:hidden;
+    position: relative;
+    width : 100vw;
+    height : 75vh;
+    background-color:rgb(241, 222, 226)
+}
+
+@keyframes moving{
+    from{
+        transform: translateX(0);
+    }
+    to{
+        transform: translateX(80vw);
+    }
+}
+
+.yl{    
+    position: absolute;
+    margin-bottom: 10px;
+    width:150px;
+    height : 150px;    
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: contain;        
+    animation:moving infinite alternate;
+}
+
+.yl:nth-of-type(1){
+    left:5%;
+    bottom: 5%;
+    background-image: url(./images/yl1.png);
+    animation-duration: 2s;
+}
+
+.yl:nth-of-type(2){
+    left:10%;
+    bottom: 3%;
+    background-image: url(./images/yl2.png);
+    animation-duration: 3s;
+}
+
+.yl:nth-of-type(3){
+    left:7%;
+    bottom: 10%;
+    background-image: url(./images/yl3.png);
+    animation-duration: 4s;
+}
