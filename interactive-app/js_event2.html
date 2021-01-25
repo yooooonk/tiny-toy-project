@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="js_event2.css">
+    <title>Animation</title>
+</head>
+<body>
+    <div class="wrap">
+        <div class="menu">
+            <button class="menu-btn">
+                <img class="icon" src="./images/yl1.png" alt><br>
+                <span class="btn-label">양락이1</span>
+            </button>
+            <button class="menu-btn">
+                <img class="icon" src="./images/yl2.png" alt><br>
+                <span class="btn-label">양락이2</span>
+            </button>
+            <button class="menu-btn">
+                <img class="icon" src="./images/yl3.png" alt><br>
+                <span class="btn-label">양락이3</span>
+            </button>
+        </div>
+    </div>
+    
+
+    <script>
+        const clickBtnHandler = (e)=>{            
+            console.log('e.target', e.target)
+        }
+        const btns = document.querySelectorAll('.menu-btn')
+
+        //addEventListener가 많아지면 메모리 점유율이 높아 성능이 떨어짐
+        /* btns[0].addEventListener('click',clickBtnHandler)
+        btns[1].addEventListener('click',clickBtnHandler)
+        btns[2].addEventListener('click',clickBtnHandler) */
+
+        // 이벤트 위임 : 부모 element에 
+        const menu = document.querySelector('.menu')
+
+        menu.addEventListener('click',clickBtnHandler)
+        
+        </script>
+</body>
+</html>
