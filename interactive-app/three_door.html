@@ -31,8 +31,35 @@
 </div>
 
 <script>
-     
+(function(){
+    const stage = document.querySelector('.stage');
+    let currentItem; 
+
+    const activate = (ele)=>{
+        ele.classList.add('door-opened');
+        currentItem = ele;
+    }
+
+    const inactivate = ()=>{
+        console.log(currentItem)
+        currentItem.classList.remove('door-opened')
+    }
+    const doorHandler = (e)=>{        
+        const target = e.target;
         
+        if(currentItem){
+            inactivate()
+            
+        }
+        if(target.classList.contains('door')){
+            activate(target.parentNode)          
+        }
+
+        
+    }
+    stage.addEventListener('click',doorHandler)
+})();
+    
 </script>
 </body>
 </html>
