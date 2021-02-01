@@ -1,0 +1,21 @@
+body{
+    margin: 0;
+    
+}
+
+@keyframes ball-ani{
+    
+    to{
+        transform:translate(200px, 200px)
+    }
+}
+
+.ball{
+    position:absolute;
+    width:30px;
+    height:30px;
+    border-radius: 50%;    
+    background-color: pink;
+    transition: 1s;
+    animation: ball-ani 1s 3 alternate forwards;
+}

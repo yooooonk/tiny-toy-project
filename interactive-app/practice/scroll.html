@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Web</title>
+    <link rel="stylesheet" href="scroll.css">
+   
+</head>
+<body>
+  <div class="ball"></div>
+
+    <script>
+        const ball = document.querySelector('.ball');
+
+        window.addEventListener('click',function(e){
+            console.log(e.clientX, e.clientY)
+            ball.style.transform = `translate(${e.clientX-15}px, ${e.clientY-15}px)`;
+        })
+    </script>
+</body>
+</html>

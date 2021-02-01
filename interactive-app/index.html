@@ -1,21 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3D wall</title>
+    <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
-    <title>Interactive app</title>
 </head>
 <body>
-    <h1>Interactive app</h1>
-    <h2><a href="./transform.html">Transform</a></h2>
-    <h2><a href="./animation.html">Animation</a></h2>
-    <h2><a href="./spaceShip.html">움직이는 우주선</a></h2>
-    <h2><a href="./3dPractice.html">3D</a></h2>
-    <h2><a href="./flex.html">Flex-box</a></h2>
-    <h2><a href="./js_practice.html">javascript event</a></h2>
-    <h2><a href="./js_event2.html"> 이벤트 위임2</a></h2>
-    <h2><a href="./three_door.html"> 세 개의 문</a></h2>
 
+<div class="progress-bar-con">
+    <div class="progress-bar"></div>
+</div>
+
+<div class="select-character">
+    <button class="select-character-btn select-character-btn-ilbuni" data-char="ilbuni"></button>
+    <button class="select-character-btn select-character-btn-ragirl" data-char="ragirl"></button>
+</div>
+
+<div class="world">
+    <div class="stage">
+        <div class="house">
+            <section class="wall wall-left"></section>
+            <section class="wall wall-right"></section>
+            <section class="wall wall-front wall-front-a">
+                <div class="wall-content">
+                    <h2 class="wall-title">안녕하세요</h2>
+                </div>
+            </section>
+            <section class="wall wall-front wall-front-b">
+                <div class="wall-content">
+                    <h2 class="wall-title">Hello</h2>
+                </div>
+            </section>
+            <section class="wall wall-front wall-front-c">
+                <div class="wall-content">
+                    <h2 class="wall-title">Hola</h2>
+                </div>
+            </section>
+            <section class="wall wall-front wall-front-d">
+                <div class="wall-content">
+                    <h2 class="wall-title">こんにちは</h2>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="content-wrapper">
+    <section class="contract">연락처</section>
+</div> -->
+
+<script src="Character.js"></script>
+<script src="wall3d.js"></script>
+<script>
+(function () {
+    const useragent = window.navigator.userAgent.toLowerCase();
+    if (useragent.indexOf('chrome') < 0 && useragent.indexOf('safari') < 0) {
+        document.body.style.cssText = 'height: auto';
+        document.body.innerHTML = '<p style="padding: 20px; line-height: 1.6">본 예제는 Full CSS 3D가 사용된 페이지로, webkit 기반 브라우저(크롬, 사파리 등)에서 확인하며 학습하시는게 좋습니다.<br>CSS 3D 부분 외에는 브라우저 상관없이 인터랙티브 웹 페이지 개발을 위해 필수적이고 유용한 내용들을 다루고 있으니 꼭 처음부터 끝까지 공부해 보세요! :)</p>';
+    }
+})();
+</script>
 </body>
 </html>
