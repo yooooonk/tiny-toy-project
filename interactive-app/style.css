@@ -4,7 +4,7 @@ body {
     font-family: 'Apple SD Gothic Neo', 'Roboto', 'Noto Sans KR', NanumGothic, 'Malgun Gothic', sans-serif;
     /* -webkit-overflow-scrolling: touch; */
     color: #555;
-    background: #fff000;
+    background: rgb(250, 214, 220);
     transition: background .5s;
 } 
 
@@ -30,7 +30,9 @@ body {
 .house{
     width:100vw;
     height: 100vh;
+    transform: translateZ(-490vw);
     transform-style: preserve-3d;
+
 }
 
 .wall{
@@ -41,6 +43,23 @@ body {
     height:100vh;
     background: rgba(255, 255, 255, 0.575)
 }
+
+.wall-left{      
+    width: 1000vw;    
+    transform: rotateY(90deg) translateZ(-500vw);
+    background-color: #f8f8f8;
+}
+
+.wall-right{    
+    width: 1000vw;    
+    transform: rotateY(90deg) translateZ(-400vw);
+    background-color: #f8f8f8;
+}
+
+.wall-front-a{transform: translateZ(300vw);}
+.wall-front-b{transform: translateZ(50vw);}
+.wall-front-c{transform: translateZ(-200vw);}
+.wall-front-d{transform: translateZ(-500vw);}
 
 .wall-content{
     display: flex;
