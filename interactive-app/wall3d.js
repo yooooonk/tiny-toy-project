@@ -40,4 +40,6 @@
     }
     
     window.addEventListener('mousemove', mousemoveHandler)
+
+    new Character()
 })()
