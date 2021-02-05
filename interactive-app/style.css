@@ -105,18 +105,18 @@ body {
     bottom:5%;    
     width: 15vw;
     height: 20vw;
-    transform-style: preserve-3d;
-    transform: rotateY(0deg);    
+    transform-style: preserve-3d;    
 }
 
-.character[data-direction='forward'] { transform: rotateY(180deg); }
-.character[data-direction='backward'] { transform: rotateY(180deg); }
+.character[data-direction='forward'] { transform: rotateY(190deg); }
+.character[data-direction='backward'] { transform: rotateY(0deg); }
 .character[data-direction='left'] { transform: rotateY(-90deg); }
 .character[data-direction='right'] { transform: rotateY(90deg); }
 
 .character-face-con {    
-    transition: 1s;
-    
+    position: absolute;
+    transform-style: preserve-3d;
+    transition: 1s;    
 }
 
 .character-face{
@@ -130,23 +130,32 @@ body {
     background-size: contain;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    transform-origin: center  ;    
+    /* transform-origin: center  ;     */
 }
 
-.character-face.face-front{    
-    z-index: 1;
+.character-head {
+    left: calc(42 / 856 * 100%);
+    top: 0;
+    width: 100%;
+    height: 100%; 
+    transform-origin: center bottom;
+    
+}
+
+.character-face.face-front{        
     background-image: url('./images2/yl-front.png');
 } 
 
 .character-face.face-back{    
-    background-image: url('./images2/yl-back.png');
-    transform: rotateY(180deg);           
+    background-image: url('./images2/yl-back.png');      
+    transform: rotateY(180deg);         
 }
 
-.moving{
+.moving .character-head{
     animation: moving 0.2s infinite alternate cubic-bezier(0.46, 0.18, 0.15, 1.05);  
+    
 }
 
-.stop{    
+.stop .character-head{    
     animation: stop 0.6s infinite alternate cubic-bezier(0.46, 0.18, 0.66, 0.93); 
 } 

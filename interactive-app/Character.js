@@ -6,7 +6,9 @@ function Character(info){
         <div class="character-face-con character-head" >
                 <div class="character-face character-head-face face-front"></div>
                 <div class="character-face character-head-face face-back"></div>
-        </div>`
+        </div>` 
+
+    
 
     document.querySelector('.stage').appendChild(this.character);
 
