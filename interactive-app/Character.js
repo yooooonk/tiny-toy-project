@@ -48,6 +48,13 @@ Character.prototype = {
             
             self.lastScrollTop = pageYOffset;
             
+        });
+
+        window.addEventListener('keydown',function(e){
+            
+            const key = {"ArrowLeft":'left', "ArrowRight":'right'}
+            
+            self.character.setAttribute('data-direction',key[e.key]);
         })
 
         
