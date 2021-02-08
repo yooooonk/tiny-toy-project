@@ -16,6 +16,9 @@ function Character(info){
     
     this.scrollState = false;
     this.lastScrollTop = 0;
+    this.xPos = info.xPos;
+    this.speed = 1;
+    this.direction ;
     this.init();
 }
 
@@ -49,14 +52,38 @@ Character.prototype = {
             self.lastScrollTop = pageYOffset;
             
         });
-
         window.addEventListener('keydown',function(e){
             
-            const key = {"ArrowLeft":'left', "ArrowRight":'right'}
-            
-            self.character.setAttribute('data-direction',key[e.key]);
-        })
+            const key = {"ArrowLeft":'left',
+                                 "ArrowRight":'right'}
 
-        
+            self.direction = key[e.key]
+            self.character.setAttribute('data-direction',self.direction);
+           
+            self.character.classList.remove('stop');
+            self.character.classList.add('moving');
+
+            self.run(self);
+        });
+
+        window.addEventListener('keyup',(e)=>{
+            if(e.key === 'ArrowLeft' || e.key === 'ArrowRight'){
+                self.character.classList.remove('moving');
+                self.character.classList.add('stop');
+            }
+        });        
+    },
+    run:function(self){
+        if(self.direction === 'left'){
+            self.xPos += self.speed*-1
+        }else{
+            self.xPos += self.speed
+        }
+
+        self.character.style.left = `${self.xPos}%`;
+
+        requestAnimationFrame(()=>{
+            self.run(self)
+        }) 
     }
 }
