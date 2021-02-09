@@ -15,10 +15,12 @@ function Character(info){
     this.character.style.left = `${info.xPos-8}%`;
     
     this.scrollState = false;
+    this.runningState = false;
     this.lastScrollTop = 0;
     this.xPos = info.xPos;
-    this.speed = 1;
+    this.speed = 0.3;
     this.direction ;
+    this.frameId ;
     this.init();
 }
 
@@ -54,35 +56,54 @@ Character.prototype = {
         });
         window.addEventListener('keydown',function(e){
             
+
+            if(self.runningState) return;
+            
             const key = {"ArrowLeft":'left',
                                  "ArrowRight":'right'}
 
             self.direction = key[e.key]
+
+            if(!self.direction) return ;
+
+            
             self.character.setAttribute('data-direction',self.direction);
            
             self.character.classList.remove('stop');
             self.character.classList.add('moving');
 
             self.run(self);
+            self.runningState = true;
         });
 
         window.addEventListener('keyup',(e)=>{
             if(e.key === 'ArrowLeft' || e.key === 'ArrowRight'){
                 self.character.classList.remove('moving');
                 self.character.classList.add('stop');
+                cancelAnimationFrame(self.frameId)
+                self.runningState = false;
             }
         });        
     },
     run:function(self){
+
         if(self.direction === 'left'){
             self.xPos += self.speed*-1
         }else{
             self.xPos += self.speed
         }
+        
+        if(self.xPos <= 2){
+            self.xPos = 2;
+        }
+
+        if(self.xPos>=80){
+            self.xPos = 80;
+        }
 
         self.character.style.left = `${self.xPos}%`;
 
-        requestAnimationFrame(()=>{
+        self.frameId = requestAnimationFrame(()=>{
             self.run(self)
         }) 
     }
