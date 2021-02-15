@@ -2,6 +2,7 @@
     const stage = document.querySelector('.stage');
     const house = document.querySelector('.house');
     const progressBar = document.querySelector('.progress-bar')
+    const selectCharacterButton = document.querySelector('.select-character')
     const mousePos = {x:0, y:0};
     let maxScrollValue =  0; 
 
@@ -46,11 +47,18 @@
     function createCharacter(e){
         
         const xPos = (e.clientX)/window.innerWidth*100
-                
+        const speed = Math.random();
+                +0.2
         new Character({
-            xPos
-        });
+            xPos,speed
+        });        
     }
+
+    // 캐릭터버튼 이벤트
+    selectCharacterButton.addEventListener('click',(e)=>{
+        const value = e.target.dataset.char;
+        document.body.setAttribute('data-char',value)
+    })
 
 
 

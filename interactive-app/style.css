@@ -159,3 +159,58 @@ body {
 .stop .character-head{    
     animation: stop 0.6s infinite alternate cubic-bezier(0.46, 0.18, 0.66, 0.93); 
 } 
+
+/* 캐릭터 버튼 */
+.select-character{
+    display: flex;
+    align-items: center;
+    position: fixed;
+    left: 50%;
+    top: 10px;
+    z-index: 100;
+}
+
+.select-character-btn{
+    width: 60px;
+    height: 60px;
+    margin-left:5px;
+    border:0;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: contain;
+    cursor: pointer;
+    transition: 0.5;
+}
+
+.select-character-btn-yl1{
+    background-image: url('./images2/yl-front.png');
+    
+    
+}
+
+.select-character-btn-yl2{
+    background-image: url('./images2/yl3.png');    
+    opacity: 0.5;
+}
+
+body[data-char='yl2'] .select-character-btn-yl2{
+    opacity: 1;
+}
+
+body[data-char='yl2'] .select-character-btn-yl1{
+    opacity: 0.5;
+}
+
+body[data-char='yl2'] .character-face.face-front{        
+    background-image: url('./images2/yl3.png');
+} 
+
+body[data-char='yl2'] .character-face.face-back{    
+    background-image: url('./images2/yl2.png');      
+    transform: rotateY(180deg);         
+}
+
+body[data-char='yl2']{
+    background: rgb(255, 166, 115);
+}

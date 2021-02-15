@@ -18,7 +18,8 @@ function Character(info){
     this.runningState = false;
     this.lastScrollTop = 0;
     this.xPos = info.xPos;
-    this.speed = 0.3;
+    this.speed = info.speed;
+    
     this.direction ;
     this.frameId ;
     this.init();
