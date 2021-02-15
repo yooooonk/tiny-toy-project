@@ -152,8 +152,7 @@ body {
 }
 
 .moving .character-head{
-    animation: moving 0.2s infinite alternate cubic-bezier(0.46, 0.18, 0.15, 1.05);  
-    
+    animation: moving 0.2s infinite alternate cubic-bezier(0.46, 0.18, 0.15, 1.05);     
 }
 
 .stop .character-head{    

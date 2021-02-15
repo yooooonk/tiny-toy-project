@@ -8,8 +8,6 @@ function Character(info){
                 <div class="character-face character-head-face face-back"></div>
         </div>` 
 
-    
-
     document.querySelector('.stage').appendChild(this.character);
 
     this.character.style.left = `${info.xPos-8}%`;
@@ -55,8 +53,7 @@ Character.prototype = {
             self.lastScrollTop = pageYOffset;
             
         });
-        window.addEventListener('keydown',function(e){
-            
+        window.addEventListener('keydown',function(e){            
 
             if(self.runningState) return;
             
@@ -109,3 +106,4 @@ Character.prototype = {
         }) 
     }
 }
+
