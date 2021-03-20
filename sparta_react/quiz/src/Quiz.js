@@ -1,21 +1,93 @@
 import React from 'react';
-import logo from './logo.svg';
-// BucketList 컴포넌트를 import 해옵니다.
-// import [컴포넌트 명] from [컴포넌트가 있는 파일경로];
-import './style.css';
+import styled from 'styled-components';
+import tory from './asset/tory1.jpg';
 
-const Quiz = ({ name }) => {
+const Quiz = () => {
   return (
-    <div className="Quiz">
-      <div>
-        나는 <span className="name">{name}</span>에 대해서 <br /> 얼마나 알고
-        있을까?
-      </div>
-
-      <input type="text" placeholder={'내 이름'} />
-      <button>시작하기</button>
-    </div>
+    <QuizContainer>
+      <p>
+        <span>1번문제</span>
+        <Question>문제입니다!</Question>
+      </p>
+      <AnswerZone>
+        <Answer>O</Answer>
+        <Answer>X</Answer>
+      </AnswerZone>
+      <DragItem>
+        <Img />
+      </DragItem>
+    </QuizContainer>
   );
 };
 
+const QuizContainer = styled.div`
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  align-items: center;
+  height: 80vh;
+  width: 100vw;
+
+  & > p {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px 0;
+  }
+  & > p > span {
+    padding: 8px 16px;
+    background-color: pink;
+    border-radius: 30px;
+    color: gray;
+  }
+`;
+
+const Img = styled.div`
+  background-image: url(${tory});
+  background-size: 100%;
+  background-position-y: center;
+  border-radius: 50%;
+  width: 160px;
+  height: 160px;
+`;
+
+const Question = styled.h1`
+  font-size: 1.5em;
+`;
+
+const AnswerZone = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+`;
+
+const Answer = styled.div`
+  width: 30%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 8em;
+  color: gray;
+  font-weight: 600;
+`;
+
+const DragItem = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  cursor: pointer;
+`;
 export default Quiz;
