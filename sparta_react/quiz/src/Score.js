@@ -3,12 +3,15 @@ import styled from 'styled-components';
 const Score = (props) => {
   return (
     <ScoreContainer>
-      <Text>귀염둥이 토리에 대한 내 점수는?</Text>
-      <div>
+      <Text>
+        <span>귀염둥이 토리</span> 퀴즈에 대한
+        <br /> 내 점수는?
+      </Text>
+      <MyScore>
         <span>100</span>점
-      </div>
-      <button>내 점수보기</button>
-      <button>랭킹보기</button>
+      </MyScore>
+      <Button>내 점수보기</Button>
+      <Button>랭킹보기</Button>
     </ScoreContainer>
   );
 };
@@ -25,10 +28,32 @@ const ScoreContainer = styled.div`
   justify-content: center;
 `;
 
-const Text = styled.h1``;
+const Text = styled.h1`
+  font-size: 1.3em;
+  margin: 0px;
+  text-align: center;
+  & span {
+    background-color: #fef5d4;
+  }
+`;
 
-const MyScore = styled.div``;
+const MyScore = styled.div`
+  font-size: 2em;
+  margin: 20px;
+  font-weight: 700;
 
-const Button = styled.button``;
+  & span {
+    background: #fef5d4;
+    border-radius: 30px;
+  }
+`;
+
+const Button = styled.button`
+  width: 100%;
+  padding: 8px;
+  border-radius: 30px;
+  border: none;
+  margin: 5px;
+`;
 
 export default Score;
