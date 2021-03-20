@@ -7,8 +7,8 @@ const Quiz = () => {
     <QuizContainer>
       <p>
         <span>1번문제</span>
-        <Question>문제입니다!</Question>
       </p>
+      <Question>문제입니다!</Question>
       <AnswerZone>
         <Answer>O</Answer>
         <Answer>X</Answer>
