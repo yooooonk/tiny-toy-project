@@ -10,7 +10,17 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '토리'
+      name: '토리',
+      page: 'quiz',
+      list: [
+        { question: '토리는 남자다', answer: true },
+        { question: '토리는 순둥이다', answer: true },
+        { question: '토리는 고라니 뼈를 좋아한다', answer: true },
+        { question: '토리는 고양이를 좋아한다', answer: false },
+        { question: '토리는 모태솔로다', answer: false },
+        { question: '토리는 진도+풍산이다', answer: true }
+      ],
+      comment: '당신은 진정한 토리악개!'
     };
   }
 
@@ -19,9 +29,11 @@ class App extends React.Component {
     return (
       <div className="App">
         <Container>
-          {/* <Main name={this.state.name} /> */}
-          {/* <Quiz /> */}
-          {<Score />}
+          {this.state.page === 'start' && <Main name={this.state.name} />}
+          {this.state.page === 'quiz' && <Quiz list={this.state.list} />}
+          {this.state.page === 'score' && (
+            <Score name={this.state.name} comment={this.state.comment} />
+          )}
         </Container>
       </div>
     );
