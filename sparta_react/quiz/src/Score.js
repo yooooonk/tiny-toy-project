@@ -1,6 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-const Score = ({ comment, name }) => {
+const Score = ({ comment, name, history }) => {
+  const restartQuiz = () => {
+    history.push('/');
+  };
+
+  const goMessage = () => {
+    history.push('/message');
+  };
   return (
     <ScoreContainer>
       <Text>
@@ -12,8 +19,8 @@ const Score = ({ comment, name }) => {
       </MyScore>
       <Comment>{comment}</Comment>
 
-      <Button>내 점수보기</Button>
-      <Button>랭킹보기</Button>
+      <Button onClick={restartQuiz}>다시하기</Button>
+      <Button onClick={goMessage}>메시지 남기기</Button>
     </ScoreContainer>
   );
 };

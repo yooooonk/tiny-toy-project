@@ -60,14 +60,17 @@ class App extends React.Component {
             />
             <Route
               path="/ranking"
-              history={this.props.history}
-              component={Ranking}
+              exact
+              render={() => (
+                <Ranking name={this.state.name} history={this.props.history} />
+              )}
             />
             <Route
               path="/message"
-              history={this.props.history}
-              component={Message}
+              exact
+              render={() => <Message history={this.props.history} />}
             />
+
             <Route
               render={(props) => <NotFound history={this.props.history} />}
             />

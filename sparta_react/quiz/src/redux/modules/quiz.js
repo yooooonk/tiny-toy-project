@@ -1,8 +1,8 @@
 const START = 'quiz/START';
-const CREATE = 'quiz/CREATE';
+const REGIST_MESSAGE = 'quiz/REGIST_MESSAGE';
 
 const initailState = {
-  name: null,
+  userName: null,
   message: []
 };
 // Action Creators
@@ -10,16 +10,27 @@ export const startQuiz = (name) => {
   return { type: START, name };
 };
 
-export const loadBucket = (bucket) => {
-  return { type: CREATE, bucket };
+export const registMessage = (message) => {
+  return { type: REGIST_MESSAGE, message };
 };
 // Reducer
 export default function reducer(state = initailState, action = {}) {
   switch (action.type) {
     case 'quiz/START': {
-      console.log(action.name);
       const userName = action.name;
-      return { name: userName };
+      return { ...state, userName: userName };
+    }
+
+    case 'quiz/REGIST_MESSAGE': {
+      const newMessage = [
+        ...state.message,
+        {
+          userName: state.userName,
+          msg: action.message
+        }
+      ];
+
+      return { ...state, message: newMessage };
     }
 
     default:

@@ -3,14 +3,14 @@ import SwipeItem from './SwipeItem';
 import styled from 'styled-components';
 
 const Quiz = ({ list, history }) => {
-  const [num, setNum] = useState(1);
+  const [num, setNum] = useState(0);
 
   const onSwipe = (direction) => {
-    setNum(num + 1);
-    console.log(num, list.length);
-    if (num === list.length) {
+    if (num + 1 === list.length) {
       history.push('/score');
+      return;
     }
+    setNum(num + 1);
   };
   return (
     <QuizContainer>

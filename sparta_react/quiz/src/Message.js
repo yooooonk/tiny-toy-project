@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import tory from './asset/tory.jpg';
 import styled from 'styled-components';
-const Message = () => {
+import { useDispatch } from 'react-redux';
+import { registMessage } from './redux/modules/quiz';
+const Message = ({ history }) => {
+  const dispatch = useDispatch();
+  const input = useRef(null);
+  const goRanking = () => {
+    dispatch(registMessage(input.current.value));
+    history.push('/ranking');
+  };
   return (
     <Container>
       <Img />
@@ -9,8 +17,8 @@ const Message = () => {
         <Span>토리</Span>에게 한 마디
       </p>
       <Bottom>
-        <Input></Input>
-        <Button>메시지 남기고 랭킹보러가기</Button>
+        <Input ref={input}></Input>
+        <Button onClick={goRanking}>메시지 남기고 랭킹보러가기</Button>
       </Bottom>
     </Container>
   );

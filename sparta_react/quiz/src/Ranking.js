@@ -1,21 +1,30 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-const Ranking = () => {
+const Ranking = ({ history }) => {
+  const message = useSelector((state) => state.quiz.message);
+  const restart = () => {
+    history.push('/');
+  };
   return (
     <Container>
       <Header>
-        <span>7명</span>의 사람들중 당신은?
+        <span>3명</span>의 사람들중 당신은?
       </Header>
       <CardContainer>
-        <Card>
-          <Rank>1등</Rank>
-          <Content>
-            조윤경 <br /> 토리 귀여워 제일좋아{' '}
-          </Content>
-        </Card>
+        {message.map((m, idx) => {
+          return (
+            <Card key={idx}>
+              <Rank>{idx + 1}등</Rank>
+              <Content>
+                {m.userName} <br /> {m.msg}
+              </Content>
+            </Card>
+          );
+        })}
       </CardContainer>
-      <Button>다시하기</Button>
+      <Button onClick={restart}>다시하기</Button>
     </Container>
   );
 };
