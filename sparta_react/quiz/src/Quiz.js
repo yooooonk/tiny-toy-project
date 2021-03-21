@@ -42,15 +42,6 @@ const QuizContainer = styled.div`
   }
 `;
 
-const Img = styled.div`
-  background-image: url(${tory});
-  background-size: 100%;
-  background-position-y: center;
-  border-radius: 50%;
-  width: 160px;
-  height: 160px;
-`;
-
 const Question = styled.h1`
   font-size: 1.5em;
 `;
@@ -80,14 +71,23 @@ const Answer = styled.div`
 
 const DragItem = styled.div`
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  top: 42vh;
+  left: 33vw;
+  width: 35vw;
+  height: 35vw;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2;
   cursor: pointer;
+`;
+
+const Img = styled.div`
+  background-image: url(${tory});
+  background-size: 100%;
+  background-position-y: center;
+  border-radius: 50%;
+  width: 35vw;
+  height: 35vw;
 `;
 export default Quiz;
