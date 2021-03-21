@@ -4,6 +4,8 @@ import Main from './Main';
 import styled from 'styled-components';
 import Quiz from './Quiz';
 import Score from './Score';
+import Ranking from './Ranking';
+import Message from './Message';
 
 // 클래스형 컴포넌트는 이렇게 생겼습니다!
 class App extends React.Component {
@@ -11,7 +13,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       name: '토리',
-      page: 'quiz',
+      page: 'ranking',
       list: [
         { question: '토리는 남자다', answer: true },
         { question: '토리는 순둥이다', answer: true },
@@ -34,6 +36,8 @@ class App extends React.Component {
           {this.state.page === 'score' && (
             <Score name={this.state.name} comment={this.state.comment} />
           )}
+          {this.state.page === 'ranking' && <Ranking />}
+          {this.state.page === 'message' && <Message />}
         </Container>
       </div>
     );
