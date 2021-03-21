@@ -1,22 +1,42 @@
 import './App.css';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 function App() {
   return (
     <div className="App">
-      <MyStyled bgColor={'red'}> Hello react</MyStyled>
+      <Box></Box>
     </div>
   );
 }
 
-const MyStyled = styled.div`
-  width: 50vw;
-  min-height: 150px;
-  border-radius: 15px;
-  color: #fff;
-  &:hover {
-    background-color: #ddd;
+const move = keyframes`
+  0% {
+    top : 20px;
+    opacity:1;
   }
-  background-color: ${(props) => props.bgColor};
+
+  30%{
+    top:50px
+  }
+  50%{
+    top : 200px;
+    opacity:0
+  }
+
+  100%{
+    top:20px;
+    opacity:1;
+  }
+`;
+
+const Box = styled.div`
+  width: 100px;
+  height: 100px;
+  background-color: skyblue;
+  border-radius: 50%;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  animation: ${move} 2s 1s infinite;
 `;
 
 export default App;

@@ -12,6 +12,7 @@ import NotFound from './NotFound';
 
 import { connect } from 'react-redux';
 import { createBucket, loadBucket } from './redux/modules/bucket';
+import Progress from './Progress';
 
 const mapStateToProps = (state) => {
   return { bucket_list: state.bucket.list };
@@ -45,6 +46,7 @@ class App extends React.Component {
       <div className="App">
         <Container>
           <Title>내 버킷리스트</Title>
+          <Progress />
           <Line />
           <Switch>
             <Route
@@ -66,6 +68,13 @@ class App extends React.Component {
             <input type="text" ref={this.text} />
             <button onClick={this.addBucketList}>추가하기</button>
           </Input>
+          <button
+            onClick={() => {
+              window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+            }}
+          >
+            위로가기
+          </button>
         </Container>
       </div>
     );
@@ -94,12 +103,30 @@ const Line = styled.hr`
 
 const Input = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   position: relative;
   justify-content: center;
   align-items: center;
   margin: 20px 0;
   padding: 10px 0;
   border-top: 3px pink dotted;
+  & * {
+    padding: 3px;
+  }
+  & input {
+    width: 60%;
+    &:focus {
+      border: 2px solid orange;
+    }
+  }
+
+  & button {
+    color: white;
+    width: 25%;
+    background-color: orange;
+    border: orange solid 1px;
+  }
 `;
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));

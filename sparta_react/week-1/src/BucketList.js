@@ -14,11 +14,13 @@ const BucketList = (props) => {
           <ItemStyle
             className="list_item"
             key={index}
+            font={list.completed ? 'white' : 'black'}
+            color={list.completed ? 'orange' : 'aliceblue'}
             onClick={() => {
               props.history.push('/detail/' + index);
             }}
           >
-            {list}
+            {list.text}
           </ItemStyle>
         );
       })}
@@ -29,15 +31,16 @@ const BucketList = (props) => {
 const ListStyle = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 50vh;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: scroll;
 `;
 
 const ItemStyle = styled.div`
   padding: 16px;
   margin: 8px;
-  background-color: aliceblue;
+  color: ${(props) => props.font};
+  background-color: ${(props) => props.color};
 `;
 
 export default BucketList;
