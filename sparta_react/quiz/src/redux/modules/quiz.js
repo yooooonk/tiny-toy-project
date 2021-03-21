@@ -1,29 +1,27 @@
 const START = 'quiz/START';
-const CREATE = 'bucket/CREATE';
+const CREATE = 'quiz/CREATE';
 
 const initailState = {
   name: null,
-  message: {}
+  message: []
 };
 // Action Creators
-export const loadBucket = (bucket) => {
-  return { type: LOAD, bucket };
+export const startQuiz = (name) => {
+  return { type: START, name };
 };
 
 export const loadBucket = (bucket) => {
   return { type: CREATE, bucket };
 };
 // Reducer
-export default function reducer(state = {}, action = {}) {
+export default function reducer(state = initailState, action = {}) {
   switch (action.type) {
-    case 'bucket/LOAD': {
-      return state;
+    case 'quiz/START': {
+      console.log(action.name);
+      const userName = action.name;
+      return { name: userName };
     }
 
-    case 'bucket/CREATE': {
-      const new_bucket_list = [...state.list, action.bucket];
-      return { list: new_bucket_list };
-    }
     default:
       return state;
   }

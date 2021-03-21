@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import logo from './logo.svg';
 import './style.css';
 import styled from 'styled-components';
 import tory from './asset/tory.jpg';
-const Main = ({ name }) => {
+import { useDispatch } from 'react-redux';
+import { startQuiz } from './redux/modules/quiz';
+const Main = ({ name, history }) => {
+  console.log('main, history', history);
+  const input = useRef(null);
+  const dispatch = useDispatch();
+  const onStart = () => {
+    dispatch(startQuiz(input.current.value));
+    history.push('/quiz');
+  };
   return (
     <Start>
       나는 <Span>{name}</Span>에 대해서 <br /> 얼마나 알고 있을까?
       <Img></Img>
       <Bottom>
-        <Input placeholder={'내 이름'}></Input>
-        <Button>시작하기</Button>
+        <Input placeholder={'내 이름'} ref={input}></Input>
+        <Button onClick={onStart}>시작하기</Button>
       </Bottom>
     </Start>
   );

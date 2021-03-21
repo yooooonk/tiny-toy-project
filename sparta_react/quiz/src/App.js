@@ -1,12 +1,13 @@
 import React from 'react';
-import './style.css';
 import Main from './Main';
 import styled from 'styled-components';
 import Quiz from './Quiz';
 import Score from './Score';
 import Ranking from './Ranking';
 import Message from './Message';
-
+import { withRouter } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
+import NotFound from './NotFound';
 // 클래스형 컴포넌트는 이렇게 생겼습니다!
 class App extends React.Component {
   constructor(props) {
@@ -31,13 +32,46 @@ class App extends React.Component {
     return (
       <div className="App">
         <Container>
-          {this.state.page === 'start' && <Main name={this.state.name} />}
-          {this.state.page === 'quiz' && <Quiz list={this.state.list} />}
-          {this.state.page === 'score' && (
-            <Score name={this.state.name} comment={this.state.comment} />
-          )}
-          {this.state.page === 'ranking' && <Ranking />}
-          {this.state.page === 'message' && <Message />}
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => (
+                <Main history={this.props.history} name={this.state.name} />
+              )}
+            />
+            <Route
+              path="/quiz"
+              exact
+              render={() => (
+                <Quiz history={this.props.history} list={this.state.list} />
+              )}
+            />
+            <Route
+              path="/score"
+              exact
+              render={() => (
+                <Score
+                  name={this.state.name}
+                  history={this.props.history}
+                  comment={this.state.comment}
+                />
+              )}
+            />
+            <Route
+              path="/ranking"
+              history={this.props.history}
+              component={Ranking}
+            />
+            <Route
+              path="/message"
+              history={this.props.history}
+              component={Message}
+            />
+            <Route
+              render={(props) => <NotFound history={this.props.history} />}
+            />
+          </Switch>
         </Container>
       </div>
     );
@@ -57,4 +91,4 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-export default App;
+export default withRouter(App);
