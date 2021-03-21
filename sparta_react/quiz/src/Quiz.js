@@ -1,21 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
+import SwipeItem from './SwipeItem';
 import styled from 'styled-components';
-import tory from './asset/tory1.jpg';
 
-const Quiz = () => {
+const Quiz = ({ list }) => {
+  const [num, setNum] = useState(0);
+
+  const onSwipe = (direction) => {
+    console.log('onSwipe direction', direction);
+    setNum(num + 1);
+  };
   return (
     <QuizContainer>
       <p>
-        <span>1번문제</span>
+        <span>{num + 1}번 문제</span>
       </p>
-      <Question>문제입니다!</Question>
+      <Question>{list[num].question}</Question>
       <AnswerZone>
         <Answer>O</Answer>
         <Answer>X</Answer>
       </AnswerZone>
-      <DragItem>
-        <Img />
-      </DragItem>
+      {list.map((q, idx) => {
+        if (idx === num) {
+          return <SwipeItem key={idx} onSwipe={onSwipe} />;
+        }
+      })}
     </QuizContainer>
   );
 };
@@ -69,25 +77,4 @@ const Answer = styled.div`
   font-weight: 600;
 `;
 
-const DragItem = styled.div`
-  position: fixed;
-  top: 42vh;
-  left: 33vw;
-  width: 35vw;
-  height: 35vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-  cursor: pointer;
-`;
-
-const Img = styled.div`
-  background-image: url(${tory});
-  background-size: 100%;
-  background-position-y: center;
-  border-radius: 50%;
-  width: 35vw;
-  height: 35vw;
-`;
 export default Quiz;
