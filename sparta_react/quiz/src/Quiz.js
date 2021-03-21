@@ -6,7 +6,6 @@ const Quiz = ({ list }) => {
   const [num, setNum] = useState(0);
 
   const onSwipe = (direction) => {
-    console.log('onSwipe direction', direction);
     setNum(num + 1);
   };
   return (

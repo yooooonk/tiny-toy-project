@@ -14,7 +14,19 @@ const SwipeItem = React.memo(({ onSwipe }) => {
   };
 
   useEffect(() => {
-    const reset = () => {};
+    const reset = () => {
+      swipeStatus = 'ready';
+      coordinate = {
+        startX: 0,
+        startY: 0,
+        endX: 0,
+        endY: 0
+      };
+
+      swipeDiv.current.className = targetClassName;
+      swipeDiv.current.style.left = 0 + 'px';
+      swipeDiv.current.style.top = 0 + 'px';
+    };
 
     const touchStart = (e) => {
       swipeStatus = 'touchstart';
@@ -39,20 +51,48 @@ const SwipeItem = React.memo(({ onSwipe }) => {
 
       let diffX = coordinate.endX - coordinate.startX;
       let direction = 'left';
+      if (Math.abs(diffX) > 50) {
+        swipeDiv.current.className = targetClassName + ' swipe';
+      }
 
       if (diffX > 0) {
         direction = 'right';
+        swipeDiv.current.style.left = diffX + 150 + 'px';
+        swipeDiv.current.style.opacity = 0;
+      } else {
+        direction = 'left';
+        swipeDiv.current.style.left = diffX - 150 + 'px';
+        swipeDiv.current.style.opacity = 0;
       }
 
-      onSwipe(direction);
+      window.setTimeout(() => {
+        reset();
+        onSwipe(direction);
+      }, 300);
+      //reset();
     };
-    const touchMove = (e) => {};
-    const touchCancel = (e) => {};
+    const touchMove = (e) => {
+      e.preventDefault();
+
+      let currentCoordinate = {
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY
+      };
+      swipeDiv.current.style.left =
+        currentCoordinate.x - coordinate.startX + 'px';
+      swipeDiv.current.style.top =
+        currentCoordinate.y - coordinate.startY + 'px';
+    };
+    const touchCancel = (e) => {
+      console.log('zostmf');
+      swipeStatus = 'cancel';
+      reset();
+    };
 
     swipeDiv.current.addEventListener('touchstart', touchStart);
     swipeDiv.current.addEventListener('touchmove', touchMove);
     swipeDiv.current.addEventListener('touchend', touchEnd);
-    swipeDiv.current.addEventListener('touchcancel', touchStart);
+    swipeDiv.current.addEventListener('touchcancel', touchCancel);
 
     return () => {
       // 초기회
@@ -75,16 +115,15 @@ const SwipeItem = React.memo(({ onSwipe }) => {
 
 const DragItem = styled.div`
   position: fixed;
-  top: 42vh;
-  left: 33vw;
-  width: 35vw;
-  height: 35vw;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2;
   cursor: pointer;
-
   &.swipe {
     transition: 300ms;
   }
