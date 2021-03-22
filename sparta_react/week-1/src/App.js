@@ -11,9 +11,15 @@ import { withRouter } from 'react-router';
 import NotFound from './NotFound';
 
 import { connect } from 'react-redux';
-import { createBucket, loadBucket } from './redux/modules/bucket';
+import {
+  addBucketFB,
+  createBucket,
+  loadBucket,
+  loadBucketFB
+} from './redux/modules/bucket';
 import Progress from './Progress';
 import { firestore } from './firebase';
+import Spinner from './Spinner';
 const mapStateToProps = (state) => {
   return { bucket_list: state.bucket.list };
 };
@@ -21,10 +27,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     load: () => {
-      dispatch(loadBucket());
+      dispatch(loadBucketFB());
     },
     create: (bucket) => {
-      dispatch(createBucket(bucket));
+      dispatch(addBucketFB(bucket));
     }
   };
 };
@@ -36,23 +42,7 @@ class App extends React.Component {
     this.text = React.createRef();
   }
   componentDidMount() {
-    const bucket = firestore.collection('bucket');
-    let bucketList = [];
-    bucket.get().then((docs) => {
-      docs.forEach((item) => {
-        if (item.exists) {
-          bucketList = [...bucketList, { id: item.id, ...item.data() }];
-        }
-      });
-      console.log(bucketList);
-    });
-
-    /*  bucket.add({ text: '코스모스 다 읽기', completed: false }).then((doc) => {
-      console.log(doc.id);
-    }); */
-
-    bucket.doc('yeWBA3L7S8PhA11Imuq5').update({ text: '기톼' });
-    bucket.doc('yeWBA3L7S8PhA11Imuq5').delete();
+    this.props.load();
   }
   addBucketList = () => {
     const new_item = this.text.current.value;
@@ -93,6 +83,7 @@ class App extends React.Component {
           >
             위로가기
           </button> */}
+          <Spinner />
         </Container>
       </div>
     );

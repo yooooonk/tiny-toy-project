@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SwipeItem from './SwipeItem';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Progress from './Progress';
+import { countCorrect, resetCorrect } from './redux/modules/quiz';
 
 const Quiz = ({ history }) => {
   const [num, setNum] = useState(0);
   const list = useSelector((state) => state.quiz.quizList);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log('gg');
+    dispatch(resetCorrect());
+  }, []);
 
   const onSwipe = (direction) => {
+    const answer = direction === 'left' ? true : false;
+
+    if (answer === list[num].answer) {
+      dispatch(countCorrect());
+    }
     if (num + 1 === list.length) {
       history.push('/score');
       return;

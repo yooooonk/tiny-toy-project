@@ -3,13 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 const Progress = ({ num }) => {
   const quizList = useSelector((state) => state.quiz.quizList);
-  /*   let count = 0;
 
-  quizList.map((b, idx) => {
-    if (b.completed) {
-      count++;
-    }
-  }); */
   return (
     <Background>
       <Bar width={(num / quizList.length) * 100 + '%'} />

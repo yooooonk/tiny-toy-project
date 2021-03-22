@@ -1,24 +1,47 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 const Ranking = ({ history }) => {
-  const message = useSelector((state) => state.quiz.message);
+  const _ranking = useSelector((state) => state.rank.ranking);
+  const myRank = useRef(null);
+  const ranking = _ranking.sort((a, b) => {
+    return b.score - a.score;
+  });
+
+  useEffect(() => {
+    if (!myRank.current) {
+      return;
+    }
+
+    window.scrollTo({
+      top: myRank.current.offsetTop,
+      left: 0,
+      behavior: 'smooth'
+    });
+
+    return () => {};
+  }, []);
+
   const restart = () => {
     history.push('/');
   };
   return (
     <Container>
       <Header>
-        <span>3명</span>의 사람들중 당신은?
+        <span>{ranking.length}명</span>의 사람들중 당신은?
       </Header>
       <CardContainer>
-        {message.map((m, idx) => {
+        {ranking.map((r, idx) => {
           return (
-            <Card key={idx}>
+            <Card
+              key={idx}
+              color={r.current ? 'pink' : ''}
+              ref={r.current ? myRank : null}
+            >
               <Rank>{idx + 1}등</Rank>
               <Content>
-                {m.userName} <br /> {m.msg}
+                {r.name} <br /> {r.message}
               </Content>
             </Card>
           );
@@ -52,6 +75,7 @@ const Header = styled.div`
 
 const CardContainer = styled.div`
   padding: 10px;
+  overflow-y: scroll;
 `;
 
 const Card = styled.div`
@@ -60,6 +84,7 @@ const Card = styled.div`
   align-items: center;
   border-radius: 10px;
   height: 80px;
+  background-color: ${(props) => props.color};
 `;
 
 const Rank = styled.div`

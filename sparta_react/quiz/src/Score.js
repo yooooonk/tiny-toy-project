@@ -2,7 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 const Score = ({ history }) => {
-  const { comment, name } = useSelector((state) => state.quiz);
+  const { name, correct } = useSelector((state) => state.quiz);
+  const { score_text } = useSelector((state) => state.rank);
+
   const restartQuiz = () => {
     history.push('/');
   };
@@ -17,9 +19,9 @@ const Score = ({ history }) => {
         <br /> 내 점수는?
       </Text>
       <MyScore>
-        <span>100</span>점
+        <span>{correct * 20}</span>점
       </MyScore>
-      <Comment>{comment}</Comment>
+      <Comment>{score_text[correct * 20]}</Comment>
 
       <Button onClick={restartQuiz}>다시하기</Button>
       <Button onClick={goMessage}>메시지 남기기</Button>

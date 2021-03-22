@@ -1,27 +1,29 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteBucket, updateBucket } from './redux/modules/bucket';
+import { deleteBucketFB, updateBucketFB } from './redux/modules/bucket';
 import styled from 'styled-components';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 const Detail = (props) => {
   const bucket_list = useSelector((state) => state.bucket.list);
   const dispatch = useDispatch();
   const bucketIdx = parseInt(props.match.params.index);
   const onDeleteBucket = () => {
-    dispatch(deleteBucket(bucketIdx));
+    dispatch(deleteBucketFB(bucketIdx));
     props.history.goBack();
   };
 
   const onCompletBucket = () => {
-    dispatch(updateBucket(bucketIdx));
+    dispatch(updateBucketFB(bucketIdx));
     props.history.goBack();
   };
   return (
     <ListStyle>
       <h1>{bucket_list[bucketIdx].text}</h1>
-      <ButtonWrapper>
-        <button onClick={onDeleteBucket}>삭제하기</button>
-        <button onClick={onCompletBucket}>완료하기</button>
-      </ButtonWrapper>
+      <ButtonGroup>
+        <Button onClick={onDeleteBucket}>삭제하기</Button>
+        <Button onClick={onCompletBucket}>완료하기</Button>
+      </ButtonGroup>
     </ListStyle>
   );
 };
@@ -31,7 +33,7 @@ const ListStyle = styled.div`
   height: 50vh;
 `;
 
-const ButtonWrapper = styled.div`
+/* const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
 
@@ -48,5 +50,5 @@ const ButtonWrapper = styled.div`
     }
   }
 `;
-
+ */
 export default Detail;

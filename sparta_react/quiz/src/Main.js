@@ -4,15 +4,14 @@ import './style.css';
 import styled from 'styled-components';
 import tory from './asset/tory.jpg';
 import { useDispatch, useSelector } from 'react-redux';
-import { startQuiz } from './redux/modules/quiz';
+import { addUserName } from './redux/modules/rank';
 const Main = ({ history }) => {
   const { name } = useSelector((state) => state.quiz);
 
-  console.log(name, 'state');
   const input = useRef(null);
   const dispatch = useDispatch();
   const onStart = () => {
-    dispatch(startQuiz(input.current.value));
+    dispatch(addUserName(input.current.value));
     history.push('/quiz');
   };
   return (

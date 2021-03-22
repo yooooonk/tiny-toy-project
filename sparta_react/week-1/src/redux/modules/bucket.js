@@ -1,3 +1,6 @@
+import { firestore } from '../../firebase';
+
+const bucketDb = firestore.collection('bucket');
 // Actions
 const LOAD = 'bucket/LOAD';
 const CREATE = 'bucket/CREATE';
@@ -28,18 +31,86 @@ export const updateBucket = (bucketIdx) => {
   return { type: UPDATE, bucketIdx };
 };
 
+// thunk
+
+export const loadBucketFB = () => {
+  return function (dispatch) {
+    bucketDb.get().then((docs) => {
+      let data = [];
+      docs.forEach((doc) => {
+        if (doc.exists) {
+          data = [...data, { id: doc.id, ...doc.data() }];
+        }
+      });
+
+      dispatch(loadBucket(data));
+    });
+  };
+};
+
+export const addBucketFB = (bucket) => {
+  return function (dispatch) {
+    let bucketData = { text: bucket, completed: false };
+
+    bucketDb.add(bucketData).then((docRef) => {
+      bucketData = { ...bucketData, id: docRef.id };
+      dispatch(createBucket(bucketData));
+    });
+  };
+};
+
+export const updateBucketFB = (idx) => {
+  return function (dispatch, getState) {
+    const _prev = getState().bucket.list[idx];
+    let newData = { ..._prev, completed: true };
+    if (!newData.id) {
+      return;
+    }
+    bucketDb
+      .doc(newData.id)
+      .update(newData)
+      .then(() => {
+        dispatch(updateBucket(idx));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+export const deleteBucketFB = (idx) => {
+  return function (dispatch, getState) {
+    const bucketData = getState().bucket.list[idx];
+
+    if (!bucketData.id) {
+      return;
+    }
+
+    bucketDb
+      .doc(bucketData.id)
+      .delete()
+      .then(() => {
+        dispatch(deleteBucket(idx));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
 // Reducer
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case 'bucket/LOAD': {
+      console.log(action.bucket);
+      if (action.bucket.length > 0) {
+        return { list: action.bucket };
+      }
       return state;
     }
 
     case 'bucket/CREATE': {
-      const new_bucket_list = [
-        ...state.list,
-        { text: action.bucket, completed: false }
-      ];
+      const new_bucket_list = [...state.list, action.bucket];
       return { list: new_bucket_list };
     }
 

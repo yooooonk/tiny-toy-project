@@ -1,20 +1,29 @@
 import React, { useRef } from 'react';
 import tory from './asset/tory.jpg';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { registMessage } from './redux/modules/quiz';
+import { useDispatch, useSelector } from 'react-redux';
+import { addRank, addUserMessage } from './redux/modules/rank';
 const Message = ({ history }) => {
   const dispatch = useDispatch();
+  const { correct, name } = useSelector((state) => state.quiz);
+  const { user_name } = useSelector((state) => state.rank);
+
   const input = useRef(null);
   const goRanking = () => {
-    dispatch(registMessage(input.current.value));
+    const rank_info = {
+      score: correct * 20,
+      name: user_name,
+      message: input.current.value,
+      current: true
+    };
+    dispatch(addRank(rank_info));
     history.push('/ranking');
   };
   return (
     <Container>
       <Img />
       <p>
-        <Span>토리</Span>에게 한 마디
+        <Span>{name}</Span>에게 한 마디
       </p>
       <Bottom>
         <Input ref={input}></Input>
