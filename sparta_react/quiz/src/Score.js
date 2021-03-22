@@ -1,6 +1,8 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-const Score = ({ comment, name, history }) => {
+const Score = ({ history }) => {
+  const { comment, name } = useSelector((state) => state.quiz);
   const restartQuiz = () => {
     history.push('/');
   };

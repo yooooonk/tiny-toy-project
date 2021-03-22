@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import SwipeItem from './SwipeItem';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import Progress from './Progress';
 
-const Quiz = ({ list, history }) => {
+const Quiz = ({ history }) => {
   const [num, setNum] = useState(0);
+  const list = useSelector((state) => state.quiz.quizList);
 
   const onSwipe = (direction) => {
     if (num + 1 === list.length) {
@@ -14,6 +17,7 @@ const Quiz = ({ list, history }) => {
   };
   return (
     <QuizContainer>
+      <Progress num={num} />
       <p>
         <span>{num + 1}번 문제</span>
       </p>

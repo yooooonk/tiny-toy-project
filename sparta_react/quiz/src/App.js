@@ -12,19 +12,6 @@ import NotFound from './NotFound';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      name: '토리',
-      page: 'ranking',
-      list: [
-        { question: '토리는 남자다', answer: true },
-        { question: '토리는 순둥이다', answer: true },
-        { question: '토리는 고라니 뼈를 좋아한다', answer: true },
-        { question: '토리는 고양이를 좋아한다', answer: false },
-        { question: '토리는 모태솔로다', answer: false },
-        { question: '토리는 진도+풍산이다', answer: true }
-      ],
-      comment: '당신은 진정한 토리악개!'
-    };
   }
 
   // 랜더 함수 안에 리액트 엘리먼트를 넣어줍니다!
@@ -36,34 +23,22 @@ class App extends React.Component {
             <Route
               path="/"
               exact
-              render={() => (
-                <Main history={this.props.history} name={this.state.name} />
-              )}
+              render={() => <Main history={this.props.history} />}
             />
             <Route
               path="/quiz"
               exact
-              render={() => (
-                <Quiz history={this.props.history} list={this.state.list} />
-              )}
+              render={() => <Quiz history={this.props.history} />}
             />
             <Route
               path="/score"
               exact
-              render={() => (
-                <Score
-                  name={this.state.name}
-                  history={this.props.history}
-                  comment={this.state.comment}
-                />
-              )}
+              render={() => <Score history={this.props.history} />}
             />
             <Route
               path="/ranking"
               exact
-              render={() => (
-                <Ranking name={this.state.name} history={this.props.history} />
-              )}
+              render={() => <Ranking history={this.props.history} />}
             />
             <Route
               path="/message"

@@ -13,7 +13,7 @@ import NotFound from './NotFound';
 import { connect } from 'react-redux';
 import { createBucket, loadBucket } from './redux/modules/bucket';
 import Progress from './Progress';
-
+import { firestore } from './firebase';
 const mapStateToProps = (state) => {
   return { bucket_list: state.bucket.list };
 };
@@ -35,7 +35,25 @@ class App extends React.Component {
 
     this.text = React.createRef();
   }
+  componentDidMount() {
+    const bucket = firestore.collection('bucket');
+    let bucketList = [];
+    bucket.get().then((docs) => {
+      docs.forEach((item) => {
+        if (item.exists) {
+          bucketList = [...bucketList, { id: item.id, ...item.data() }];
+        }
+      });
+      console.log(bucketList);
+    });
 
+    /*  bucket.add({ text: '코스모스 다 읽기', completed: false }).then((doc) => {
+      console.log(doc.id);
+    }); */
+
+    bucket.doc('yeWBA3L7S8PhA11Imuq5').update({ text: '기톼' });
+    bucket.doc('yeWBA3L7S8PhA11Imuq5').delete();
+  }
   addBucketList = () => {
     const new_item = this.text.current.value;
     this.props.create(new_item);
@@ -68,13 +86,13 @@ class App extends React.Component {
             <input type="text" ref={this.text} />
             <button onClick={this.addBucketList}>추가하기</button>
           </Input>
-          <button
+          {/* <button
             onClick={() => {
               window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
             }}
           >
             위로가기
-          </button>
+          </button> */}
         </Container>
       </div>
     );

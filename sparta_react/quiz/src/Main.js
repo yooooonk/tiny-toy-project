@@ -3,10 +3,12 @@ import logo from './logo.svg';
 import './style.css';
 import styled from 'styled-components';
 import tory from './asset/tory.jpg';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { startQuiz } from './redux/modules/quiz';
-const Main = ({ name, history }) => {
-  console.log('main, history', history);
+const Main = ({ history }) => {
+  const { name } = useSelector((state) => state.quiz);
+
+  console.log(name, 'state');
   const input = useRef(null);
   const dispatch = useDispatch();
   const onStart = () => {
