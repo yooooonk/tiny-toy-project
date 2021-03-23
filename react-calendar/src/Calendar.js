@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
-const Calendar = () => {
+const Calendar = ({ history }) => {
   const [today, setToday] = useState(moment());
 
   const movePrevMonth = () => {
@@ -12,19 +12,18 @@ const Calendar = () => {
   const moveNextMonth = () => {
     setToday(today.clone().add(1, 'month'));
   };
-
+  const goToAddSchedule = () => {
+    history.push('/addSchedule');
+  };
   const generate = () => {
-    console.log(today.format('yyyy mm dd'));
     // 일년은 52주
     const startWeek = today.clone().startOf('month').week();
     const endWeek =
       today.clone().endOf('month').week() === 1
         ? 53
         : today.clone().endOf('month').week();
-    console.log(
-      'start Of week',
-      today.clone().week(startWeek).startOf('week').format('yyyy MM DD')
-    );
+
+    //today.clone().week(startWeek).startOf('week').format('YYYYMMDD')
     // 날짜
     let calendar = [];
 
@@ -43,7 +42,12 @@ const Calendar = () => {
                 .format('D');
 
               return (
-                <Day key={n + idx}>
+                <Day
+                  key={n + idx}
+                  onClick={() => {
+                    console.log(day);
+                  }}
+                >
                   <span>{day}</span>
                 </Day>
               );
@@ -55,39 +59,42 @@ const Calendar = () => {
   };
 
   return (
-    <CalendarWrapper>
-      <Header>
-        <MdChevronLeft onClick={movePrevMonth}>이전달</MdChevronLeft>
-        {today.format('MMMM')}
-        <MdChevronRight onClick={moveNextMonth}>다음달</MdChevronRight>
-      </Header>
-      <DateContainer>
-        <Weekend className="row">
-          <Day>
-            <span>일</span>
-          </Day>
-          <Day>
-            <span>월</span>
-          </Day>
-          <Day>
-            <span>화</span>
-          </Day>
-          <Day>
-            <span>수</span>
-          </Day>
-          <Day>
-            <span>목</span>
-          </Day>
-          <Day>
-            <span>금</span>
-          </Day>
-          <Day>
-            <span>토</span>
-          </Day>
-        </Weekend>
-        {generate()}
-      </DateContainer>
-    </CalendarWrapper>
+    <div>
+      <CalendarWrapper>
+        <Header>
+          <MdChevronLeft onClick={movePrevMonth}>이전달</MdChevronLeft>
+          {today.format('MMMM')}
+          <MdChevronRight onClick={moveNextMonth}>다음달</MdChevronRight>
+        </Header>
+        <DateContainer>
+          <Weekend className="row">
+            <Day>
+              <span>일</span>
+            </Day>
+            <Day>
+              <span>월</span>
+            </Day>
+            <Day>
+              <span>화</span>
+            </Day>
+            <Day>
+              <span>수</span>
+            </Day>
+            <Day>
+              <span>목</span>
+            </Day>
+            <Day>
+              <span>금</span>
+            </Day>
+            <Day>
+              <span>토</span>
+            </Day>
+          </Weekend>
+          {generate()}
+        </DateContainer>
+      </CalendarWrapper>
+      <AddButton onClick={goToAddSchedule}>+</AddButton>
+    </div>
   );
 };
 
@@ -100,9 +107,7 @@ const Header = styled.div`
   align-items: center;
   padding: 0 3px;
 
-  font : {
-    size: 2em;
-  }
+  font-size: 1.5em;
 
   & * {
     color: #cccccc;
@@ -126,5 +131,16 @@ const Day = styled.div`
     background-color: #97b484;
     border-radius: 50%;
   }
+`;
+
+const AddButton = styled.div`
+  position: fixed;
+  right: 0;
+  margin: 10px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  background-color: skyblue;
 `;
 export default Calendar;
