@@ -14,15 +14,15 @@ export const filterThisMonth = createAction('FILTER_THIS_MONTH');
 
 const schedule = createReducer(initialState, {
   [fetchFullSchedule]: (state, { payload }) => {
-    state.fullSchedule = payload;
+    state.fullSchedule = payload.fullList;
+    state.thisMonth = payload.thisMonth;
+    console.log(payload.thisMonth);
   },
   [addSchedule]: (state, { payload }) => {
-    console.log('add', payload);
     state.fullSchedule.push(payload);
   },
   [filterThisMonth]: (state, { payload }) => {
     state.thisMonth = state.fullSchedule.filter((sc, idx) => {
-      console.log(payload.startDay, payload.endDay, sc.date);
       return (
         parseInt(sc.date) >= parseInt(payload.startDay) &&
         parseInt(sc.date) <= parseInt(payload.endDay)
@@ -41,7 +41,7 @@ export const createSchedule = (data) => {
   };
 };
 
-export const readSchedule = () => {
+export const readSchedule = ({ startDay, endDay }) => {
   return (dispatch) => {
     db.get().then((docs) => {
       let fullList = [];
@@ -50,7 +50,14 @@ export const readSchedule = () => {
         fullList.push(schedule);
       });
 
-      dispatch(fetchFullSchedule(fullList));
+      const thisMonth = fullList.filter((sc, idx) => {
+        return (
+          parseInt(sc.date) >= parseInt(startDay) &&
+          parseInt(sc.date) <= parseInt(endDay)
+        );
+      });
+
+      dispatch(fetchFullSchedule({ fullList, thisMonth }));
     });
   };
 };

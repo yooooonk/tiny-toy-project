@@ -10,7 +10,9 @@ const Calendar = ({ history }) => {
   const [today, setToday] = useState(moment());
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(readSchedule());
+    const startDay = today.clone().startOf('month').format('YYYYMMDD');
+    const endDay = today.clone().endOf('month').format('YYYYMMDD');
+    dispatch(readSchedule({ startDay, endDay }));
   }, []);
 
   const movePrevMonth = () => {
@@ -156,15 +158,13 @@ const DateContainer = styled.div`
 
 const Weekend = styled.div`
   display: flex;
-  background-color: pink;
 `;
 
 const Dow = styled.div`
   border: 1px solid black;
-  width: 30px;
+  width: 100%;
+  text-align: center;
   & span {
-    background-color: #97b484;
-    border-radius: 50%;
   }
 `;
 
