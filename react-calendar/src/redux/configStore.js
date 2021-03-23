@@ -1,16 +1,16 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
-import rank from './modules/rank';
-
-import { createBrowserHistory } from 'history';
+import schedule from './modules/schedule';
+//import { createBrowserHistory } from 'history';
 import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 //export const history = createBrowserHistory();
 
 const middlewares = [thunk];
 const enhancer = applyMiddleware(...middlewares);
 
-const rootReducer = combineReducers({ rank });
+const rootReducer = combineReducers({ schedule });
 
-const store = createStore(rootReducer, enhancer);
+const store = createStore(rootReducer, composeWithDevTools(enhancer));
 
 export default store;

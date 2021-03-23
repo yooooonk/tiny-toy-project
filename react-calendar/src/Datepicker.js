@@ -1,13 +1,16 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import moment from 'moment';
-const Datepicker = () => {
+const Datepicker = ({ setDate }) => {
   //const pickedData = useRef(null);
 
   const current =
     moment().format().split(':')[0] + ':' + moment().format().split(':')[1];
 
+  useEffect(() => {
+    setDate(current);
+  }, []);
   const useStyles = makeStyles((theme) => ({
     container: {
       display: 'flex',
@@ -17,15 +20,8 @@ const Datepicker = () => {
     textField: {
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1),
-      width: 250
-    },
-    palette: {
-      primary: {
-        main: '#f44336'
-      },
-      secondary: {
-        main: '#3f51b5'
-      }
+      width: 250,
+      textAlign: 'center'
     }
   }));
   const classes = useStyles();
@@ -36,9 +32,7 @@ const Datepicker = () => {
         type="datetime-local"
         defaultValue={current}
         className={classes.textField}
-        onChange={(e) => {
-          console.log(e.target.value);
-        }}
+        onChange={(e) => setDate(e.target.value)}
         InputLabelProps={{
           shrink: true
         }}
