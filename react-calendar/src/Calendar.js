@@ -1,16 +1,49 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
+import 'moment/locale/ko';
 import styled from 'styled-components';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
+import { useDispatch } from 'react-redux';
+import { filterThisMonth, readSchedule } from './redux/modules/schedule';
+import Day from './Day';
 const Calendar = ({ history }) => {
   const [today, setToday] = useState(moment());
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(readSchedule());
+  }, []);
 
   const movePrevMonth = () => {
     setToday(today.clone().subtract(1, 'month'));
+    const startDay = today
+      .clone()
+      .subtract(1, 'months')
+      .startOf('month')
+      .format('YYYYMMDD');
+    const endDay = today
+      .clone()
+      .subtract(1, 'months')
+      .endOf('month')
+      .format('YYYYMMDD');
+
+    dispatch(filterThisMonth({ startDay, endDay }));
   };
 
   const moveNextMonth = () => {
     setToday(today.clone().add(1, 'month'));
+
+    const startDay = today
+      .clone()
+      .add(1, 'months')
+      .startOf('month')
+      .format('YYYYMMDD');
+    const endDay = today
+      .clone()
+      .add(1, 'months')
+      .endOf('month')
+      .format('YYYYMMDD');
+
+    dispatch(filterThisMonth({ startDay, endDay }));
   };
   const goToAddSchedule = () => {
     history.push('/addSchedule');
@@ -41,16 +74,18 @@ const Calendar = ({ history }) => {
                 .add(idx, 'day')
                 .format('D');
 
-              return (
-                <Day
-                  key={n + idx}
-                  onClick={() => {
-                    console.log(day);
-                  }}
-                >
-                  <span>{day}</span>
-                </Day>
-              );
+              let fullDate = today
+                .clone()
+                .startOf('year')
+                .week(w)
+                .startOf('week')
+                .add(idx, 'day')
+                .format('l')
+                .replaceAll('.', '');
+
+              let dateInfo = { day, fullDate, dow: idx };
+
+              return <Day key={n + idx} dateInfo={dateInfo}></Day>;
             })}
         </Weekend>
       );
@@ -68,27 +103,27 @@ const Calendar = ({ history }) => {
         </Header>
         <DateContainer>
           <Weekend className="row">
-            <Day>
+            <Dow>
               <span>일</span>
-            </Day>
-            <Day>
+            </Dow>
+            <Dow>
               <span>월</span>
-            </Day>
-            <Day>
+            </Dow>
+            <Dow>
               <span>화</span>
-            </Day>
-            <Day>
+            </Dow>
+            <Dow>
               <span>수</span>
-            </Day>
-            <Day>
+            </Dow>
+            <Dow>
               <span>목</span>
-            </Day>
-            <Day>
+            </Dow>
+            <Dow>
               <span>금</span>
-            </Day>
-            <Day>
+            </Dow>
+            <Dow>
               <span>토</span>
-            </Day>
+            </Dow>
           </Weekend>
           {generate()}
         </DateContainer>
@@ -124,7 +159,7 @@ const Weekend = styled.div`
   background-color: pink;
 `;
 
-const Day = styled.div`
+const Dow = styled.div`
   border: 1px solid black;
   width: 30px;
   & span {
