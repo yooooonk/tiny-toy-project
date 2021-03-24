@@ -2,15 +2,21 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import 'moment/locale/ko';
 import styled from 'styled-components';
-import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
+import {
+  MdChevronLeft,
+  MdChevronRight,
+  MdDehaze,
+  MdCheck,
+  MdDoneAll,
+  MdEdit
+} from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { filterThisMonth, readSchedule } from './redux/modules/schedule';
-
-import { MdAddCircle } from 'react-icons/md';
 import Day from './Day';
 const Calendar = ({ history }) => {
   const { thisMonth } = useSelector((state) => state.schedule);
   const [current, setCurrent] = useState(moment());
+  const [isFilter, setIsFiliter] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -108,6 +114,10 @@ const Calendar = ({ history }) => {
     return calendar;
   };
 
+  const onFilter = (isFilter) => {
+    setIsFiliter(isFilter);
+  };
+
   return (
     <div>
       <CalendarWrapper>
@@ -149,10 +159,83 @@ const Calendar = ({ history }) => {
           {generate()}
         </DateContainer>
       </CalendarWrapper>
-      <AddButton onClick={goToAddSchedule}>+</AddButton>
+      <ButtonWrapper>
+        {isFilter ? (
+          <MdCheck
+            onClick={() => onFilter(false)}
+            bgColor={'pink'}
+            className={'filterBtn subBtn'}
+          />
+        ) : (
+          <MdDoneAll
+            onClick={() => onFilter(true)}
+            bgColor={'pink'}
+            className={'filterBtn subBtn'}
+          />
+        )}
+        <MdEdit
+          onClick={goToAddSchedule}
+          backgroundColor={'sk'}
+          className={'writeBtn subBtn'}
+        />
+        <MdDehaze backgroundColor={'pink'} className={'menuBtn'} />
+      </ButtonWrapper>
     </div>
   );
 };
+
+const ButtonWrapper = styled.div`
+  position: absolute;
+  left: 90vw;
+  top: 60vh;
+  text-align: center;
+  padding-bottom: 3px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  height: 150px;
+
+  &:hover .subBtn {
+    opacity: 1;
+    visibility: visible;
+    top: 0;
+  }
+
+  & > svg {
+    cursor: pointer;
+
+    border-radius: 50%;
+    color: white;
+    width: 25px;
+    height: 25px;
+    padding: 10px;
+
+    &.filterBtn {
+      background-color: pink;
+      z-index: 1;
+      transition: all 0.4s ease;
+    }
+
+    &.writeBtn {
+      background-color: skyblue;
+      z-index: 2;
+      transition: all 0.5s ease;
+    }
+
+    &.menuBtn {
+      background-color: #ffdb0d;
+      z-index: 3;
+    }
+
+    &.subBtn {
+      opacity: 0;
+      visibility: hidden;
+      top: 60px;
+      position: relative;
+    }
+  }
+`;
 
 const CalendarWrapper = styled.div`
   position: relative;
