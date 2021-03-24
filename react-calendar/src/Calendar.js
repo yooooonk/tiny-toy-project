@@ -3,17 +3,19 @@ import moment from 'moment';
 import 'moment/locale/ko';
 import styled from 'styled-components';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { filterThisMonth, readSchedule } from './redux/modules/schedule';
 import Day from './Day';
 const Calendar = ({ history }) => {
+  const { thisMonth } = useSelector((state) => state.schedule);
   const [today, setToday] = useState(moment());
   const dispatch = useDispatch();
+
   useEffect(() => {
     const startDay = today.clone().startOf('month').format('YYYYMMDD');
     const endDay = today.clone().endOf('month').format('YYYYMMDD');
     dispatch(readSchedule({ startDay, endDay }));
-  }, []);
+  }, [today, dispatch]);
 
   const movePrevMonth = () => {
     setToday(today.clone().subtract(1, 'month'));
@@ -58,7 +60,6 @@ const Calendar = ({ history }) => {
         ? 53
         : today.clone().endOf('month').week();
 
-    //today.clone().week(startWeek).startOf('week').format('YYYYMMDD')
     // 날짜
     let calendar = [];
 
@@ -85,8 +86,11 @@ const Calendar = ({ history }) => {
                 .format('l')
                 .replaceAll('.', '');
 
-              let dateInfo = { day, fullDate, dow: idx };
+              const todaySch = thisMonth.filter((s) => {
+                return s.date === fullDate;
+              });
 
+              const dateInfo = { day, fullDate, dow: idx, todaySch };
               return <Day key={n + idx} dateInfo={dateInfo}></Day>;
             })}
         </Weekend>

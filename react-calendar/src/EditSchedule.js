@@ -1,26 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { MdChevronLeft } from 'react-icons/md';
 import Datepicker from './Datepicker';
 import { Button, TextField, makeStyles } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
-import { createSchedule } from './redux/modules/schedule';
-import moment from 'moment';
+import { useDispatch, useSelector } from 'react-redux';
+import { createSchedule, openEditPopup } from './redux/modules/schedule';
 
-const AddSchedule = ({ history }) => {
+const EditSchedule = ({ history }) => {
+  const { currentSchedule } = useSelector((state) => state.schedule);
+
+  console.log(currentSchedule.date, currentSchedule.time);
+
   const [date, setDate] = useState();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [titleError, setTitleError] = useState(false);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const current =
-      moment().format().split(':')[0] + ':' + moment().format().split(':')[1];
-
-    console.log(current);
-    setDate(current);
-  }, [setDate]);
 
   const useStyles = makeStyles((theme) => ({
     textField: {
@@ -54,21 +49,22 @@ const AddSchedule = ({ history }) => {
     return true;
   };
   return (
-    <div>
+    <Popup>
       <Header>
         <MdChevronLeft
           onClick={() => {
-            history.goBack();
+            dispatch(openEditPopup(false));
           }}
         />
-        일정 추가 &nbsp;&nbsp;&nbsp;
+        일정 보기 &nbsp;&nbsp;&nbsp;
         <i />
       </Header>
       <Body>
-        <Datepicker setDate={setDate} date={date} />
+        <Datepicker setDate={setDate} />
         <TextField
           id="standard-basic"
           label="어떤 일정이 있나요?"
+          defaultValue={currentSchedule.title}
           error={titleError}
           className={classes.textField}
           onChange={(e) => {
@@ -79,6 +75,7 @@ const AddSchedule = ({ history }) => {
           id="outlined-multiline-static"
           label="간단 메모"
           multiline
+          defaultValue={currentSchedule.description}
           rows={4}
           variant="outlined"
           onChange={(e) => {
@@ -89,10 +86,15 @@ const AddSchedule = ({ history }) => {
           + ADD
         </Button>
       </Body>
-    </div>
+    </Popup>
   );
 };
 
+const Popup = styled.div`
+  position: fixed;
+  z-index: 2;
+  background-color: white;
+`;
 const Header = styled.div`
   height: 7vh;
   display: flex;
@@ -114,4 +116,4 @@ const Body = styled.div`
   justify-content: space-around;
   width: 100vw;
 `;
-export default AddSchedule;
+export default EditSchedule;

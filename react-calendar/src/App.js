@@ -4,13 +4,18 @@ import Calendar from './Calendar';
 import { Route, Switch } from 'react-router-dom';
 import AddSchedule from './AddSchedule';
 import { withRouter } from 'react-router';
+import EditSchedule from './EditSchedule';
+import { useSelector } from 'react-redux';
 const App = ({ history }) => {
+  const { isOpenEditPopup } = useSelector((state) => state.schedule);
   return (
     <div className="App">
       <Title>CALENDAR</Title>
-
-      <Route exact path="/" component={Calendar} />
-      <Route exact path="/addSchedule" component={AddSchedule} />
+      {isOpenEditPopup && <EditSchedule />}
+      <Switch>
+        <Route exact path="/" component={Calendar} />
+        <Route exact path="/addSchedule" component={AddSchedule} />
+      </Switch>
     </div>
   );
 };
