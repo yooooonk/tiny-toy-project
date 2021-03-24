@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { filterThisMonth, readSchedule } from './redux/modules/schedule';
 import Day from './Day';
 const Calendar = ({ history }) => {
-  const { thisMonth } = useSelector((state) => state.schedule);
+  const { thisMonth, isOpenEditPopup } = useSelector((state) => state.schedule);
   const [current, setCurrent] = useState(moment());
   const [isFilter, setIsFiliter] = useState(false);
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const Calendar = ({ history }) => {
     const startDay = current.clone().startOf('month').format('YYYYMMDD');
     const endDay = current.clone().endOf('month').format('YYYYMMDD');
     dispatch(readSchedule({ startDay, endDay }));
-  }, [current, dispatch]);
+  }, [current, dispatch, isOpenEditPopup]);
 
   const movePrevMonth = () => {
     setCurrent(current.clone().subtract(1, 'month'));
@@ -163,22 +163,16 @@ const Calendar = ({ history }) => {
         {isFilter ? (
           <MdCheck
             onClick={() => onFilter(false)}
-            bgColor={'pink'}
             className={'filterBtn subBtn'}
           />
         ) : (
           <MdDoneAll
             onClick={() => onFilter(true)}
-            bgColor={'pink'}
             className={'filterBtn subBtn'}
           />
         )}
-        <MdEdit
-          onClick={goToAddSchedule}
-          backgroundColor={'sk'}
-          className={'writeBtn subBtn'}
-        />
-        <MdDehaze backgroundColor={'pink'} className={'menuBtn'} />
+        <MdEdit onClick={goToAddSchedule} className={'writeBtn subBtn'} />
+        <MdDehaze className={'menuBtn'} />
       </ButtonWrapper>
     </div>
   );
