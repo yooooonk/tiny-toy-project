@@ -7,15 +7,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createSchedule, openEditPopup } from './redux/modules/schedule';
 
 const EditSchedule = ({ history }) => {
+  const dispatch = useDispatch();
   const { currentSchedule } = useSelector((state) => state.schedule);
-
-  console.log(currentSchedule.date, currentSchedule.time);
-
-  const [date, setDate] = useState();
+  const d = currentSchedule.date;
+  const t = currentSchedule.time;
+  const [date, setDate] = useState(
+    d.slice(0, 4) +
+      '-' +
+      d.slice(4, 6) +
+      '-' +
+      d.slice(6) +
+      'T' +
+      t.slice(0, 2) +
+      ':' +
+      t.slice(2)
+  );
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [titleError, setTitleError] = useState(false);
-  const dispatch = useDispatch();
 
   const useStyles = makeStyles((theme) => ({
     textField: {
@@ -60,7 +69,7 @@ const EditSchedule = ({ history }) => {
         <i />
       </Header>
       <Body>
-        <Datepicker setDate={setDate} />
+        <Datepicker setDate={setDate} date={date} />
         <TextField
           id="standard-basic"
           label="어떤 일정이 있나요?"

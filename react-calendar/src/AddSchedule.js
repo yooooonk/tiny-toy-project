@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { MdChevronLeft } from 'react-icons/md';
 import Datepicker from './Datepicker';
@@ -8,19 +8,13 @@ import { createSchedule } from './redux/modules/schedule';
 import moment from 'moment';
 
 const AddSchedule = ({ history }) => {
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(
+    moment().format().split(':')[0] + ':' + moment().format().split(':')[1]
+  );
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [titleError, setTitleError] = useState(false);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const current =
-      moment().format().split(':')[0] + ':' + moment().format().split(':')[1];
-
-    console.log(current);
-    setDate(current);
-  }, [setDate]);
 
   const useStyles = makeStyles((theme) => ({
     textField: {
