@@ -12,6 +12,7 @@ export const initialState = {
 
 export const fetchFullSchedule = createAction('FETCH_FULL_SCHEDULE');
 export const addSchedule = createAction('ADD_SCHEDULE');
+export const editSchedule = createAction('EDIT_SCHEDULE');
 export const filterThisMonth = createAction('FILTER_THIS_MONTH');
 export const openEditPopup = createAction('OPEN_EDIT_POPUP');
 export const setCurrentSchedule = createAction('SET_CURRENT_SCHEDULE');
@@ -28,6 +29,15 @@ const schedule = createReducer(initialState, {
   [addSchedule]: (state, { payload }) => {
     state.fullSchedule.push(payload);
   },
+  [editSchedule]: (state, { payload }) => {
+    const fullIdx = state.fullSchedule.findIndex((s) => s.id === payload.id);
+    state.fullSchedule.splice(fullIdx, 1, payload);
+
+    const monthIdx = state.thisMonth.findIndex((s) => s.id === payload.id);
+    state.fullSchedule.splice(monthIdx, 1, payload);
+
+    state.currentSchedule = payload;
+  },
 
   [filterThisMonth]: (state, { payload }) => {
     state.thisMonth = state.fullSchedule.filter((sc, idx) => {
@@ -42,8 +52,9 @@ const schedule = createReducer(initialState, {
 // thunk
 export const createSchedule = (data) => {
   return (dispatch) => {
-    db.add(data).then((docRef) => {
-      let schedule = { ...data, completed: false, id: docRef.id };
+    const saveData = { ...data, completed: false };
+    db.add(saveData).then((docRef) => {
+      let schedule = { ...saveData, id: docRef.id };
       dispatch(addSchedule(schedule));
     });
   };
@@ -54,8 +65,10 @@ export const readSchedule = ({ startDay, endDay }) => {
     db.get().then((docs) => {
       let fullList = [];
       docs.forEach((doc) => {
-        let schedule = { ...doc.data(), id: doc.id };
-        fullList.push(schedule);
+        if (doc.exists) {
+          let schedule = { ...doc.data(), id: doc.id };
+          fullList.push(schedule);
+        }
       });
 
       const thisMonth = fullList.filter((sc, idx) => {
@@ -67,6 +80,16 @@ export const readSchedule = ({ startDay, endDay }) => {
 
       dispatch(fetchFullSchedule({ fullList, thisMonth }));
     });
+  };
+};
+
+export const updateSchedule = (data) => {
+  return (dispatch) => {
+    db.doc(data.id)
+      .update(data)
+      .then((docRef) => {
+        dispatch(editSchedule(data));
+      });
   };
 };
 
