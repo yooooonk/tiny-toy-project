@@ -8,23 +8,23 @@ import { filterThisMonth, readSchedule } from './redux/modules/schedule';
 import Day from './Day';
 const Calendar = ({ history }) => {
   const { thisMonth } = useSelector((state) => state.schedule);
-  const [today, setToday] = useState(moment());
+  const [current, setCurrent] = useState(moment());
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const startDay = today.clone().startOf('month').format('YYYYMMDD');
-    const endDay = today.clone().endOf('month').format('YYYYMMDD');
+    const startDay = current.clone().startOf('month').format('YYYYMMDD');
+    const endDay = current.clone().endOf('month').format('YYYYMMDD');
     dispatch(readSchedule({ startDay, endDay }));
-  }, [today, dispatch]);
+  }, [current, dispatch]);
 
   const movePrevMonth = () => {
-    setToday(today.clone().subtract(1, 'month'));
-    const startDay = today
+    setCurrent(current.clone().subtract(1, 'month'));
+    const startDay = current
       .clone()
       .subtract(1, 'months')
       .startOf('month')
       .format('YYYYMMDD');
-    const endDay = today
+    const endDay = current
       .clone()
       .subtract(1, 'months')
       .endOf('month')
@@ -34,14 +34,14 @@ const Calendar = ({ history }) => {
   };
 
   const moveNextMonth = () => {
-    setToday(today.clone().add(1, 'month'));
+    setCurrent(current.clone().add(1, 'month'));
 
-    const startDay = today
+    const startDay = current
       .clone()
       .add(1, 'months')
       .startOf('month')
       .format('YYYYMMDD');
-    const endDay = today
+    const endDay = current
       .clone()
       .add(1, 'months')
       .endOf('month')
@@ -54,11 +54,11 @@ const Calendar = ({ history }) => {
   };
   const generate = () => {
     // 일년은 52주
-    const startWeek = today.clone().startOf('month').week();
+    const startWeek = current.clone().startOf('month').week();
     const endWeek =
-      today.clone().endOf('month').week() === 1
+      current.clone().endOf('month').week() === 1
         ? 53
-        : today.clone().endOf('month').week();
+        : current.clone().endOf('month').week();
 
     // 날짜
     let calendar = [];
@@ -69,29 +69,39 @@ const Calendar = ({ history }) => {
           {Array(7)
             .fill(0)
             .map((n, idx) => {
-              let day = today
+              const noFormatDate = current
                 .clone()
                 .startOf('year')
                 .week(w)
                 .startOf('week')
-                .add(idx, 'day')
-                .format('D');
+                .add(idx, 'day');
+              console.log(
+                noFormatDate.format('YYYYMMDD'),
+                current.format('YYYYMMDD')
+              );
+              const day = noFormatDate.format('D');
+              const fullDate = noFormatDate.format('l').replaceAll('.', '');
+              const isToday =
+                noFormatDate.format('YYYYMMDD') === moment().format('YYYYMMDD')
+                  ? 'today'
+                  : '';
+              const isGrayed =
+                noFormatDate.format('MM') === current.format('MM')
+                  ? ''
+                  : 'grayed';
 
-              let fullDate = today
-                .clone()
-                .startOf('year')
-                .week(w)
-                .startOf('week')
-                .add(idx, 'day')
-                .format('l')
-                .replaceAll('.', '');
-
-              const todaySch = thisMonth.filter((s) => {
+              const currentSch = thisMonth.filter((s) => {
                 return s.date === fullDate;
               });
 
-              const dateInfo = { day, fullDate, dow: idx, todaySch };
-              return <Day key={n + idx} dateInfo={dateInfo}></Day>;
+              const dateInfo = { day, fullDate, dow: idx, currentSch };
+              return (
+                <Day
+                  key={n + idx}
+                  dateInfo={dateInfo}
+                  className={`${isGrayed} ${isToday}`}
+                />
+              );
             })}
         </Weekend>
       );
@@ -107,7 +117,7 @@ const Calendar = ({ history }) => {
             className="dir"
             onClick={movePrevMonth}
           ></MdChevronLeft>
-          <span>{today.format('MMMM')}</span>
+          <span>{current.format('MMMM')}</span>
           <MdChevronRight
             className="dir"
             onClick={moveNextMonth}
@@ -192,12 +202,13 @@ const Dow = styled.div`
 const AddButton = styled.div`
   position: absolute;
   z-index: 1;
-  right: 0;
+  left: 90vw;
+  top: 75vh;
   margin: 10px;
   border-radius: 50%;
   width: 40px;
   height: 40px;
   text-align: center;
-  background-color: skyblue;
+  background-color: #ffdb0d;
 `;
 export default Calendar;
