@@ -5,7 +5,6 @@ import Datepicker from './Datepicker';
 import { Button, TextField, makeStyles, ButtonGroup } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  createSchedule,
   deleteSchedule,
   openEditPopup,
   updateSchedule

@@ -22,6 +22,9 @@ const AddSchedule = ({ history }) => {
       marginRight: theme.spacing(1),
       width: 250,
       textAlign: 'center'
+    },
+    button: {
+      width: '250px'
     }
   }));
 
@@ -48,7 +51,7 @@ const AddSchedule = ({ history }) => {
     return true;
   };
   return (
-    <div>
+    <Wrapper>
       <Header>
         <MdChevronLeft
           onClick={() => {
@@ -74,38 +77,84 @@ const AddSchedule = ({ history }) => {
           label="간단 메모"
           multiline
           rows={4}
+          className={classes.textField}
           variant="outlined"
           onChange={(e) => {
             setDescription(e.target.value);
           }}
         />
-        <Button variant="contained" color="secondary" onClick={onAddSchedule}>
+        <Button
+          className={classes.button}
+          variant="contained"
+          color="secondary"
+          onClick={onAddSchedule}
+        >
           + ADD
         </Button>
       </Body>
-    </div>
+    </Wrapper>
   );
 };
 
+const Wrapper = styled.div`
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const Header = styled.div`
+  background-color: white;
   height: 7vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 3px;
-
   font-size: 1.5em;
 
   & * {
     color: #cccccc;
+    cursor: pointer;
+  }
+
+  /* Mobile Device */
+  @media screen and (max-width: 767px) {
+    width: 100vw;
+  }
+
+  /* Tablet Device */
+  @media screen and (min-width: 768px) and (max-width: 991px) {
+    width: 100vw;
+  }
+
+  /* Desktop Device */
+  @media screen and (min-width: 992px) {
+    width: 30vw;
   }
 `;
 
 const Body = styled.div`
-  height: 80vh;
+  background-color: white;
+  padding-top: 6vh;
+  height: 50vh;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width: 100vw;
+  align-items: center;
+
+  /* Mobile Device */
+  @media screen and (max-width: 767px) {
+    width: 100vw;
+  }
+
+  /* Tablet Device */
+  @media screen and (min-width: 768px) and (max-width: 991px) {
+    width: 100vw;
+  }
+
+  /* Desktop Device */
+  @media screen and (min-width: 992px) {
+    width: 30vw;
+  }
 `;
 export default AddSchedule;

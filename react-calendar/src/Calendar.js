@@ -87,7 +87,6 @@ const Calendar = ({ history }) => {
                 .replaceAll('.', '');
 
               const todaySch = thisMonth.filter((s) => {
-                console.log();
                 return s.date === fullDate;
               });
 
@@ -104,32 +103,38 @@ const Calendar = ({ history }) => {
     <div>
       <CalendarWrapper>
         <Header>
-          <MdChevronLeft onClick={movePrevMonth}>이전달</MdChevronLeft>
-          {today.format('MMMM')}
-          <MdChevronRight onClick={moveNextMonth}>다음달</MdChevronRight>
+          <MdChevronLeft
+            className="dir"
+            onClick={movePrevMonth}
+          ></MdChevronLeft>
+          <span>{today.format('MMMM')}</span>
+          <MdChevronRight
+            className="dir"
+            onClick={moveNextMonth}
+          ></MdChevronRight>
         </Header>
         <DateContainer>
           <Weekend className="row">
-            <Dow>
-              <span>일</span>
+            <Dow color="#ff4b4b">
+              <span>S</span>
             </Dow>
             <Dow>
-              <span>월</span>
+              <span>M</span>
             </Dow>
             <Dow>
-              <span>화</span>
+              <span>T</span>
             </Dow>
             <Dow>
-              <span>수</span>
+              <span>W</span>
             </Dow>
             <Dow>
-              <span>목</span>
+              <span>T</span>
             </Dow>
             <Dow>
-              <span>금</span>
+              <span>F</span>
             </Dow>
-            <Dow>
-              <span>토</span>
+            <Dow color="#4b87ff">
+              <span>S</span>
             </Dow>
           </Weekend>
           {generate()}
@@ -140,25 +145,34 @@ const Calendar = ({ history }) => {
   );
 };
 
-const CalendarWrapper = styled.div``;
+const CalendarWrapper = styled.div`
+  position: relative;
+`;
 
 const Header = styled.div`
   height: 7vh;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 0 3px;
-
   font-size: 1.5em;
 
-  & * {
+  & > span {
+    margin: 0 100px;
+  }
+  & > .dir {
     color: #cccccc;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 
 const DateContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 1vw;
 `;
 
 const Weekend = styled.div`
@@ -166,15 +180,18 @@ const Weekend = styled.div`
 `;
 
 const Dow = styled.div`
-  border: 1px solid black;
+  border-bottom: 1px solid gray;
   width: 100%;
+  height: 35px;
+  color: ${(props) => (props.color ? props.color : 'black')};
   text-align: center;
   & span {
   }
 `;
 
 const AddButton = styled.div`
-  position: fixed;
+  position: absolute;
+  z-index: 1;
   right: 0;
   margin: 10px;
   border-radius: 50%;

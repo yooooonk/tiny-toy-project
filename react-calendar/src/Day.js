@@ -9,6 +9,7 @@ const Day = ({ dateInfo }) => {
   const openPopup = (schedule) => {
     dispatch(openEditPopup({ isOpen: true, schedule }));
   };
+  schedule.sort((a, b) => a.time - b.time);
   const mapToPlan = schedule.map((s, idx) => {
     return (
       <Plan
@@ -33,15 +34,15 @@ const Day = ({ dateInfo }) => {
 };
 
 const D = styled.div`
-  border: 1px solid black;
-  width: 30vh;
+  padding-top: 4px;
   height: 12vh;
   display: flex;
+  width: 100%;
   flex-direction: column;
   flex-wrap: nowrap;
   overflow: hidden;
   & > .title {
-    text-align: right;
+    text-align: center;
   }
 `;
 
