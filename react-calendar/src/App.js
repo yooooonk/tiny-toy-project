@@ -11,8 +11,8 @@ const App = ({ history }) => {
   return (
     <div className="App">
       <Title>CALENDAR</Title>
-      {isOpenEditPopup && <EditSchedule />}
       <Switch>
+        {isOpenEditPopup && <EditSchedule />}
         <Route exact path="/" component={Calendar} />
         <Route exact path="/addSchedule" component={AddSchedule} />
       </Switch>

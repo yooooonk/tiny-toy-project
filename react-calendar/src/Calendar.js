@@ -87,6 +87,7 @@ const Calendar = ({ history }) => {
                 .replaceAll('.', '');
 
               const todaySch = thisMonth.filter((s) => {
+                console.log();
                 return s.date === fullDate;
               });
 

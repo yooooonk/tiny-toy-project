@@ -13,6 +13,7 @@ export const initialState = {
 export const fetchFullSchedule = createAction('FETCH_FULL_SCHEDULE');
 export const addSchedule = createAction('ADD_SCHEDULE');
 export const editSchedule = createAction('EDIT_SCHEDULE');
+export const removeSchedule = createAction('REMOVE_SCHEDULE');
 export const filterThisMonth = createAction('FILTER_THIS_MONTH');
 export const openEditPopup = createAction('OPEN_EDIT_POPUP');
 export const setCurrentSchedule = createAction('SET_CURRENT_SCHEDULE');
@@ -29,6 +30,9 @@ const schedule = createReducer(initialState, {
   [addSchedule]: (state, { payload }) => {
     state.fullSchedule.push(payload);
   },
+  [addSchedule]: (state, { payload }) => {
+    state.fullSchedule.push(payload);
+  },
   [editSchedule]: (state, { payload }) => {
     const fullIdx = state.fullSchedule.findIndex((s) => s.id === payload.id);
     state.fullSchedule.splice(fullIdx, 1, payload);
@@ -37,6 +41,15 @@ const schedule = createReducer(initialState, {
     state.fullSchedule.splice(monthIdx, 1, payload);
 
     state.currentSchedule = payload;
+  },
+  [removeSchedule]: (state, { payload }) => {
+    const fullIdx = state.fullSchedule.findIndex((s) => s.id === payload.id);
+    state.fullSchedule.splice(fullIdx, 1);
+
+    const monthIdx = state.thisMonth.findIndex((s) => s.id === payload.id);
+    state.fullSchedule.splice(monthIdx, 1);
+
+    state.currentSchedule = null;
   },
 
   [filterThisMonth]: (state, { payload }) => {
@@ -89,6 +102,19 @@ export const updateSchedule = (data) => {
       .update(data)
       .then((docRef) => {
         dispatch(editSchedule(data));
+      });
+  };
+};
+
+export const deleteSchedule = (id) => {
+  return (dispatch) => {
+    db.doc(id)
+      .delete()
+      .then(() => {
+        dispatch(removeSchedule(id));
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 };

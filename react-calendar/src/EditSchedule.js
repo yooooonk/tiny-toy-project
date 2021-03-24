@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { MdChevronLeft } from 'react-icons/md';
 import Datepicker from './Datepicker';
@@ -6,6 +6,7 @@ import { Button, TextField, makeStyles, ButtonGroup } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   createSchedule,
+  deleteSchedule,
   openEditPopup,
   updateSchedule
 } from './redux/modules/schedule';
@@ -13,7 +14,7 @@ import {
 const EditSchedule = ({ history }) => {
   const dispatch = useDispatch();
   const { currentSchedule } = useSelector((state) => state.schedule);
-  console.log('editSchedule', currentSchedule);
+
   const d = currentSchedule.date;
   const t = currentSchedule.time;
   const [date, setDate] = useState(
@@ -27,8 +28,8 @@ const EditSchedule = ({ history }) => {
       ':' +
       t.slice(2)
   );
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const inputTitle = useRef();
+  const inputDescription = useRef();
   const [titleError, setTitleError] = useState(false);
 
   const useStyles = makeStyles((theme) => ({
@@ -48,15 +49,25 @@ const EditSchedule = ({ history }) => {
     if (checkValid()) {
       const yyyymmdd = date.split('T')[0].replaceAll('-', '');
       const time = date.split('T')[1].replaceAll(':', '');
-      const data = { date: yyyymmdd, time, title, description };
+      const title = inputTitle.current.value;
+      const description = inputDescription.current.value;
 
-      dispatch(createSchedule(data));
+      const data = {
+        date: yyyymmdd,
+        time,
+        title,
+        description,
+        id: currentSchedule.id
+      };
 
-      //history.push('/');
+      dispatch(updateSchedule(data));
+      dispatch(openEditPopup(false));
     }
   };
 
   const checkValid = () => {
+    const title = inputTitle.current.value;
+
     if (title.length === 0 || title.trim().length === 0) {
       setTitleError(true);
       return false;
@@ -68,10 +79,12 @@ const EditSchedule = ({ history }) => {
   const onComplete = () => {
     const data = { ...currentSchedule, completed: true };
     dispatch(updateSchedule(data));
+    dispatch(openEditPopup(false));
   };
 
   const onDelete = () => {
-    console.log(currentSchedule.id);
+    dispatch(deleteSchedule(currentSchedule.id));
+    dispatch(openEditPopup(false));
   };
 
   return (
@@ -93,8 +106,9 @@ const EditSchedule = ({ history }) => {
           defaultValue={currentSchedule.title}
           error={titleError}
           className={classes.textField}
+          inputRef={inputTitle}
           onChange={(e) => {
-            setTitle(e.target.value);
+            //setTitle(e.target.value);
           }}
         />
         <TextField
@@ -102,10 +116,11 @@ const EditSchedule = ({ history }) => {
           label="간단 메모"
           multiline
           defaultValue={currentSchedule.description}
+          inputRef={inputDescription}
           rows={4}
           variant="outlined"
           onChange={(e) => {
-            setDescription(e.target.value);
+            //setDescription(e.target.value);
           }}
         />
         <ButtonGroup

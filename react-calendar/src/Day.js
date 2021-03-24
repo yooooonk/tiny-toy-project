@@ -14,7 +14,7 @@ const Day = ({ dateInfo }) => {
       <Plan
         key={idx}
         data={s}
-        color={schedule.completed ? 'gray' : 'skyblue'}
+        color={s.completed ? 'gray' : 'skyblue'}
         onClick={() => {
           openPopup(s);
         }}
