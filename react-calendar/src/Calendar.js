@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { filterThisMonth, readSchedule } from './redux/modules/schedule';
+
+import { MdAddCircle } from 'react-icons/md';
 import Day from './Day';
 const Calendar = ({ history }) => {
   const { thisMonth } = useSelector((state) => state.schedule);
@@ -75,10 +77,7 @@ const Calendar = ({ history }) => {
                 .week(w)
                 .startOf('week')
                 .add(idx, 'day');
-              console.log(
-                noFormatDate.format('YYYYMMDD'),
-                current.format('YYYYMMDD')
-              );
+
               const day = noFormatDate.format('D');
               const fullDate = noFormatDate.format('l').replaceAll('.', '');
               const isToday =
@@ -201,14 +200,16 @@ const Dow = styled.div`
 
 const AddButton = styled.div`
   position: absolute;
-  z-index: 1;
   left: 90vw;
-  top: 75vh;
-  margin: 10px;
+  top: 80vh;
   border-radius: 50%;
+  text-align: center;
+  padding-bottom: 3px;
   width: 40px;
   height: 40px;
-  text-align: center;
   background-color: #ffdb0d;
+  color: white;
+  font-size: 30px;
+  font-weight: 700;
 `;
 export default Calendar;

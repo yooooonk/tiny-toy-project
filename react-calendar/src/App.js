@@ -13,10 +13,10 @@ const App = ({ history }) => {
     <div className="App">
       <Title>CALENDAR</Title>
       <Switch>
-        {isOpenEditPopup && <EditSchedule />}
         <Route exact path="/" component={Calendar} />
         <Route exact path="/addSchedule" component={AddSchedule} />
       </Switch>
+      {isOpenEditPopup && <EditSchedule />}
     </div>
   );
 };

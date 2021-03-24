@@ -32,13 +32,11 @@ const EditSchedule = ({ history }) => {
   const [titleError, setTitleError] = useState(false);
 
   const useStyles = makeStyles((theme) => ({
-    root: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      '& > *': {
-        margin: theme.spacing(1)
-      }
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      width: 250,
+      textAlign: 'center'
     }
   }));
 
@@ -116,6 +114,7 @@ const EditSchedule = ({ history }) => {
           multiline
           defaultValue={currentSchedule.description}
           inputRef={inputDescription}
+          className={classes.textField}
           rows={4}
           variant="outlined"
           onChange={(e) => {
@@ -139,28 +138,59 @@ const EditSchedule = ({ history }) => {
 
 const Popup = styled.div`
   position: fixed;
-  z-index: 2;
-  background-color: white;
+  background-color: #fff3f3;
+  transition: all 1s easy;
+  box-shadow: 5px 10px 20px gray;
+  border-radius: 20px;
+  /* Mobile Device */
+  @media screen and (max-width: 767px) {
+    width: 100%;
+    top: 0;
+    height: 100%;
+    box-shadow: none;
+    border-radius: 0px;
+  }
+
+  /* Tablet Device */
+  @media screen and (min-width: 768px) and (max-width: 991px) {
+    width: 350px;
+    top: 5vh;
+    left: 32vw;
+    height: 80vh;
+  }
+
+  /* Desktop Device */
+  @media screen and (min-width: 992px) {
+    top: 5vh;
+    left: 38vw;
+    width: 25vw;
+    height: 80vh;
+  }
 `;
 const Header = styled.div`
   height: 7vh;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 3px;
-
   font-size: 1.5em;
 
   & * {
     color: #cccccc;
   }
+
+  & > svg {
+    cursor: pointer;
+  }
 `;
 
 const Body = styled.div`
-  height: 80vh;
+  padding-top: 6vh;
+  height: 50vh;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width: 100vw;
+  align-items: center;
 `;
 export default EditSchedule;

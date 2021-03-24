@@ -24,7 +24,9 @@ const AddSchedule = ({ history }) => {
       textAlign: 'center'
     },
     button: {
-      width: '250px'
+      width: '250px',
+      backgroundColor: 'skyblue',
+      color: 'white'
     }
   }));
 
@@ -86,7 +88,6 @@ const AddSchedule = ({ history }) => {
         <Button
           className={classes.button}
           variant="contained"
-          color="secondary"
           onClick={onAddSchedule}
         >
           + ADD
