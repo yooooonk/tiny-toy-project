@@ -16,7 +16,6 @@ const App = ({ history }) => {
         <Route exact path="/" component={Calendar} />
         <Route exact path="/addSchedule" component={AddSchedule} />
       </Switch>
-      {isOpenEditPopup && <EditSchedule />}
     </div>
   );
 };

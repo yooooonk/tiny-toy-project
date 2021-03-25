@@ -12,11 +12,12 @@ import {
 } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  filterThisMonth,
   readSchedule,
-  setIsFilter
+  setIsFilter,
+  openEditPopup
 } from './redux/modules/schedule';
 import Day from './Day';
+import EditSchedule from './EditSchedule';
 const Calendar = ({ history }) => {
   const { thisMonth, isOpenEditPopup, isFilter } = useSelector(
     (state) => state.schedule
@@ -100,6 +101,7 @@ const Calendar = ({ history }) => {
   return (
     <div>
       <CalendarWrapper>
+        {isOpenEditPopup && <EditSchedule />}
         <Header>
           <MdChevronLeft
             className="dir"
@@ -138,7 +140,11 @@ const Calendar = ({ history }) => {
           {generate()}
         </DateContainer>
       </CalendarWrapper>
-      <ButtonWrapper>
+      <ButtonWrapper
+        onClick={() => {
+          dispatch(openEditPopup(false));
+        }}
+      >
         {isFilter ? (
           <MdCheck
             onClick={() => onFilter(false)}
@@ -254,18 +260,4 @@ const Dow = styled.div`
   }
 `;
 
-const AddButton = styled.div`
-  position: absolute;
-  left: 90vw;
-  top: 80vh;
-  border-radius: 50%;
-  text-align: center;
-  padding-bottom: 3px;
-  width: 40px;
-  height: 40px;
-  background-color: #ffdb0d;
-  color: white;
-  font-size: 30px;
-  font-weight: 700;
-`;
 export default Calendar;
