@@ -27,7 +27,7 @@ const Calendar = ({ history }) => {
     const startDay = current.clone().startOf('month').format('YYYYMMDD');
     const endDay = current.clone().endOf('month').format('YYYYMMDD');
     dispatch(readSchedule({ startDay, endDay }));
-  }, [current, dispatch, isOpenEditPopup]);
+  }, [current, dispatch, isOpenEditPopup, isFilter]);
 
   const movePrevMonth = () => {
     setCurrent(current.clone().subtract(1, 'month'));

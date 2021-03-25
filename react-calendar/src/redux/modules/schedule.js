@@ -24,7 +24,15 @@ export const setIsFilter = createAction('SET_IS_FILITER');
 const schedule = createReducer(initialState, {
   [fetchFullSchedule]: (state, { payload }) => {
     state.fullSchedule = payload.fullList;
-    state.thisMonth = payload.thisMonth;
+    state.thisMonthSchedule = payload.thisMonthSchedule;
+
+    if (state.isFilter) {
+      state.thisMonth = state.thisMonthSchedule.filter((sc) => {
+        return sc.completed === true;
+      });
+    } else {
+      state.thisMonth = state.thisMonthSchedule;
+    }
   },
   [openEditPopup]: (state, { payload }) => {
     state.isOpenEditPopup = payload.isOpen;
@@ -34,12 +42,7 @@ const schedule = createReducer(initialState, {
     state.fullSchedule.push(payload);
   },
   [setIsFilter]: (state, { payload }) => {
-    console.log('setIsFilter', payload);
     state.isFilter = payload;
-
-    state.thisMonth = state.thisMonth.filter((sc, idx) => {
-      return sc.completed === payload;
-    });
   },
   [addSchedule]: (state, { payload }) => {
     state.fullSchedule.push(payload);
@@ -103,14 +106,14 @@ export const readSchedule = ({ startDay, endDay }) => {
         }
       });
 
-      const thisMonth = fullList.filter((sc, idx) => {
+      const thisMonthSchedule = fullList.filter((sc, idx) => {
         return (
           parseInt(sc.date) >= parseInt(startDay) &&
           parseInt(sc.date) <= parseInt(endDay)
         );
       });
 
-      dispatch(fetchFullSchedule({ fullList, thisMonth }));
+      dispatch(fetchFullSchedule({ fullList, thisMonthSchedule }));
     });
   };
 };
