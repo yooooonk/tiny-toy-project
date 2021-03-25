@@ -11,14 +11,18 @@ import {
   MdEdit
 } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
-import { filterThisMonth, readSchedule } from './redux/modules/schedule';
+import {
+  filterThisMonth,
+  readSchedule,
+  setIsFilter
+} from './redux/modules/schedule';
 import Day from './Day';
 const Calendar = ({ history }) => {
-  const { thisMonth, isOpenEditPopup } = useSelector((state) => state.schedule);
+  const { thisMonth, isOpenEditPopup, isFilter } = useSelector(
+    (state) => state.schedule
+  );
   const [current, setCurrent] = useState(moment());
-  const [isFilter, setIsFiliter] = useState(false);
   const dispatch = useDispatch();
-
   useEffect(() => {
     const startDay = current.clone().startOf('month').format('YYYYMMDD');
     const endDay = current.clone().endOf('month').format('YYYYMMDD');
@@ -27,35 +31,10 @@ const Calendar = ({ history }) => {
 
   const movePrevMonth = () => {
     setCurrent(current.clone().subtract(1, 'month'));
-    const startDay = current
-      .clone()
-      .subtract(1, 'months')
-      .startOf('month')
-      .format('YYYYMMDD');
-    const endDay = current
-      .clone()
-      .subtract(1, 'months')
-      .endOf('month')
-      .format('YYYYMMDD');
-
-    dispatch(filterThisMonth({ startDay, endDay }));
   };
 
   const moveNextMonth = () => {
     setCurrent(current.clone().add(1, 'month'));
-
-    const startDay = current
-      .clone()
-      .add(1, 'months')
-      .startOf('month')
-      .format('YYYYMMDD');
-    const endDay = current
-      .clone()
-      .add(1, 'months')
-      .endOf('month')
-      .format('YYYYMMDD');
-
-    dispatch(filterThisMonth({ startDay, endDay }));
   };
   const goToAddSchedule = () => {
     history.push('/addSchedule');
@@ -115,7 +94,7 @@ const Calendar = ({ history }) => {
   };
 
   const onFilter = (isFilter) => {
-    setIsFiliter(isFilter);
+    dispatch(setIsFilter(isFilter));
   };
 
   return (

@@ -5,9 +5,11 @@ const db = firestore.collection('schedule');
 
 export const initialState = {
   fullSchedule: [],
+  thisMonthSchedule: [],
   thisMonth: [],
   isOpenEditPopup: false,
-  currentSchedule: null
+  currentSchedule: null,
+  isFilter: false
 };
 
 export const fetchFullSchedule = createAction('FETCH_FULL_SCHEDULE');
@@ -17,6 +19,7 @@ export const removeSchedule = createAction('REMOVE_SCHEDULE');
 export const filterThisMonth = createAction('FILTER_THIS_MONTH');
 export const openEditPopup = createAction('OPEN_EDIT_POPUP');
 export const setCurrentSchedule = createAction('SET_CURRENT_SCHEDULE');
+export const setIsFilter = createAction('SET_IS_FILITER');
 
 const schedule = createReducer(initialState, {
   [fetchFullSchedule]: (state, { payload }) => {
@@ -29,6 +32,14 @@ const schedule = createReducer(initialState, {
   },
   [addSchedule]: (state, { payload }) => {
     state.fullSchedule.push(payload);
+  },
+  [setIsFilter]: (state, { payload }) => {
+    console.log('setIsFilter', payload);
+    state.isFilter = payload;
+
+    state.thisMonth = state.thisMonth.filter((sc, idx) => {
+      return sc.completed === payload;
+    });
   },
   [addSchedule]: (state, { payload }) => {
     state.fullSchedule.push(payload);
@@ -54,10 +65,18 @@ const schedule = createReducer(initialState, {
 
   [filterThisMonth]: (state, { payload }) => {
     state.thisMonth = state.fullSchedule.filter((sc, idx) => {
-      return (
-        parseInt(sc.date) >= parseInt(payload.startDay) &&
-        parseInt(sc.date) <= parseInt(payload.endDay)
-      );
+      if (state.isFilter) {
+        return (
+          parseInt(sc.date) >= parseInt(payload.startDay) &&
+          parseInt(sc.date) <= parseInt(payload.endDay) &&
+          sc.completed === true
+        );
+      } else {
+        return (
+          parseInt(sc.date) >= parseInt(payload.startDay) &&
+          parseInt(sc.date) <= parseInt(payload.endDay)
+        );
+      }
     });
   }
 });

@@ -32,6 +32,8 @@
 - redux toolkit 적용!
 - 데이터처리는 어떻게 했나요?
   - 캘린더 일정을 뿌리는 것 : 월을 바꿀 때 , 해당월에 해당하는 일정만 필터
+  - Calendar.js에 useEfect(readSchedule), 월이동할 때 filterTHisMonth()
+  - 그래서 filterThisMonth를해도 리렌더링이 되어 fetch_full_schedule을 도 호출함
 - 하나의 함수는 하나의 기능만!
 - redux-toolkit을 이용해보았다
 - thunk는 액션함수를 반환한다!!!!액션을 따로 만들어줄 필요가없다
