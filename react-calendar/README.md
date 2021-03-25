@@ -32,8 +32,134 @@
 - redux toolkit 적용!
 - 데이터처리는 어떻게 했나요?
   - 캘린더 일정을 뿌리는 것 : 월을 바꿀 때 , 해당월에 해당하는 일정만 필터
-  - Calendar.js에 useEfect(readSchedule), 월이동할 때 filterTHisMonth()
-  - 그래서 filterThisMonth를해도 리렌더링이 되어 fetch_full_schedule을 도 호출함
+
+```javascript
+[filterThisMonth]: (state, { payload }) => {
+    state.thisMonth = state.fullSchedule.filter((sc, idx) => {
+      if (state.isFilter) {
+        return (
+          parseInt(sc.date) >= parseInt(payload.startDay) &&
+          parseInt(sc.date) <= parseInt(payload.endDay) &&
+          sc.completed === true
+        );
+      } else {
+        return (
+          parseInt(sc.date) >= parseInt(payload.startDay) &&
+          parseInt(sc.date) <= parseInt(payload.endDay)
+        );
+      }
+    });
+  }
+
+
+export const readSchedule = ({ startDay, endDay }) => {
+  return (dispatch) => {
+    db.get().then((docs) => {
+      let fullList = [];
+      docs.forEach((doc) => {
+        if (doc.exists) {
+          let schedule = { ...doc.data(), id: doc.id };
+          fullList.push(schedule);
+        }
+      });
+
+      const thisMonthSchedule = fullList.filter((sc, idx) => {
+        return (
+          parseInt(sc.date) >= parseInt(startDay) &&
+          parseInt(sc.date) <= parseInt(endDay)
+        );
+      });
+
+      dispatch(fetchFullSchedule({ fullList, thisMonthSchedule }));
+    });
+  };
+};
+
+
+[fetchFullSchedule]: (state, { payload }) => {
+    state.fullSchedule = payload.fullList;
+    state.thisMonth = payload.thisMonth;
+  }
+```
+
+```javascript
+// 변경후
+[fetchFullSchedule]: (state, { payload }) => {
+    state.fullSchedule = payload.fullList;
+    state.thisMonthSchedule = payload.thisMonthSchedule;
+    //fetch할때부터filter상태로
+    if (state.isFilter) {
+      state.thisMonth = state.thisMonthSchedule.filter((sc) => {
+        return sc.completed === true;
+      });
+    } else {
+      state.thisMonth = state.thisMonthSchedule;
+    }
+  }
+
+```
+
+- Calendar.js에 useEfect(readSchedule), 월이동할 때 filterTHisMonth()
+
+```javascript
+const movePrevMonth = () => {
+  setCurrent(current.clone().subtract(1, 'month'));
+  const startDay = current
+    .clone()
+    .subtract(1, 'months')
+    .startOf('month')
+    .format('YYYYMMDD');
+  const endDay = current
+    .clone()
+    .subtract(1, 'months')
+    .endOf('month')
+    .format('YYYYMMDD');
+
+  dispatch(filterThisMonth({ startDay, endDay }));
+};
+
+const moveNextMonth = () => {
+  setCurrent(current.clone().add(1, 'month'));
+
+  const startDay = current
+    .clone()
+    .add(1, 'months')
+    .startOf('month')
+    .format('YYYYMMDD');
+  const endDay = current
+    .clone()
+    .add(1, 'months')
+    .endOf('month')
+    .format('YYYYMMDD');
+
+  dispatch(filterThisMonth({ startDay, endDay }));
+};
+```
+
+- 그래서 filterThisMonth를해도 리렌더링이 되어 fetch_full_schedule을 도 호출함
+- thisMonth()가 없어도 충분히 돌아가서 수정했음!
+
+```javascript
+const { thisMonth, isOpenEditPopup, isFilter } = useSelector(
+  (state) => state.schedule
+);
+const [current, setCurrent] = useState(moment());
+const dispatch = useDispatch();
+useEffect(() => {
+  const startDay = current.clone().startOf('month').format('YYYYMMDD');
+  const endDay = current.clone().endOf('month').format('YYYYMMDD');
+  dispatch(readSchedule({ startDay, endDay }));
+}, [current, dispatch, isOpenEditPopup, isFilter]);
+
+const movePrevMonth = () => {
+  setCurrent(current.clone().subtract(1, 'month'));
+};
+
+const moveNextMonth = () => {
+  setCurrent(current.clone().add(1, 'month'));
+};
+```
+
 - 하나의 함수는 하나의 기능만!
 - redux-toolkit을 이용해보았다
 - thunk는 액션함수를 반환한다!!!!액션을 따로 만들어줄 필요가없다
