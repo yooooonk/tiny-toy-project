@@ -1,7 +1,8 @@
 import React from 'react';
 import Post from '../components/Post';
 
-const PostList = () => {
+const PostList = (props) => {
+  const { history } = props;
   return (
     <div>
       <Post />
