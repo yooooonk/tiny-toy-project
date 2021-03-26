@@ -1,29 +1,59 @@
 # React로 만든 calendar
 
+![](https://images.velog.io/images/ouo_yoonk/post/aebdfe30-0640-41de-8e67-beb44a0707e2/caleandar.PNG)
+
 ## Info
 
 - 개발기간 : 3월 22일~3월 25일
-- stack : react(CRA), redux, firebase
-- desing reference : https://dribbble.com/shots/3622125-Calendar-UI
+- stack : react(CRA), redux, firebase, thunk, styled-component, momentjs
+- repository : https://github.com/yooooonk/tiny-toy-project/tree/master/react-calendar
+
+일정관리가 가능한 달력을 리액트로 간단히 만들어보았다. redux, router, firebase의 기능학습을 목적으로 했다.
+
+일정 데이터를 어떻게 처리해서 각 일과 일정 컴포넌트에 렌더링을 할 것인가가 가장 큰 고민이었고, 일정의 상태를 업데이트를 했을 때 화면에 바로 반영이 안되는 게 가장 큰 문제였다. useEffect를 이용해서 해결했고, hook에 대해 공부할 수 있었다.
+
+~~drag 기능도 구현하고 싶었는데, 컴포넌트 props로 넣은 날짜 데이터를 받아올 수 없고, appendChild도 사용할 수 없어 실패했다. CRA가 아닌 다른 방법으로 프로젝트를 빌드하고 싶었는데 그것도 실패했다....ㅠ~~
+
+가장 마음에 드는 부분드는 부분은 버튼이다. ㅋㅋㅋㅋ
 
 ## 개발 순서
 
-[] 기본 달력 구현
+[v] 기본 달력 구현
 
 - 월 출력, 월 이동 v
 - 날짜 출력 v
 - Month 컴포넌트 디자인
 - Calendar 컴포넌트 디자인
 - Todo 컴포넌트 생성 및 디자인 v
-- today
+- today v
 
-[] 스케줄러 기능
+[v] 스케줄러 기능
 
 - firebase 연결 v
 - 등록 v
 - 스케줄 조회 v
 - 수정 v
 - 삭제 v
+
+## 상세기능
+
+![](https://images.velog.io/images/ouo_yoonk/post/464f3cf9-c2da-4c4c-944f-db879a0aa810/calendar.gif)
+
+- 날짜, 일정 가져오기
+- 완료 일정 필터 기능
+- 일정 시간순 정렬
+  ![](https://images.velog.io/images/ouo_yoonk/post/cd5af383-2eb3-40ae-98cb-a3dd880b3b1a/calendar2.gif)
+- 일정추가
+- router이용
+
+![](https://images.velog.io/images/ouo_yoonk/post/21e69ea9-8069-40b7-b022-dc57c8f0d8b2/calendar3.gif)
+
+- 수정 모달
+- 완료, 수정, 삭제 기능- 완료, 수정, 삭제 기능
+
+![](https://images.velog.io/images/ouo_yoonk/post/d22e0ecc-630f-4065-88ef-73d4adbaa61e/calendar4.gif)
+
+- 반응형 웹
 
 ## 삽질쓰
 
