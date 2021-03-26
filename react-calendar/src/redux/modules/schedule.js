@@ -31,6 +31,7 @@ const schedule = createReducer(initialState, {
         return sc.completed === true;
       });
     } else {
+      console.log('gg');
       state.thisMonth = state.thisMonthSchedule;
     }
   },

@@ -75,13 +75,13 @@ const EditSchedule = ({ history }) => {
 
   const onComplete = () => {
     const data = { ...currentSchedule, completed: true };
-    dispatch(updateSchedule(data));
     dispatch(openEditPopup(false));
+    dispatch(updateSchedule(data));
   };
 
   const onDelete = () => {
-    dispatch(deleteSchedule(currentSchedule.id));
     dispatch(openEditPopup(false));
+    dispatch(deleteSchedule(currentSchedule.id));
   };
 
   return (
