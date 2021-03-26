@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { Text, Input, Button, Grid } from '../elements';
 import styled from 'styled-components';
+import { actionCreators as userActoins } from '../redux/modules/user';
+import { useDispatch } from 'react-redux';
+
 const Form = (props) => {
   const [id, setId] = useState('');
   const [pw, setPw] = useState('');
 
+  const dispatch = useDispatch();
+
   const onLogin = () => {
-    console.log(id, pw);
+    dispatch(userActoins.loginAction({ user_name: 'tori' }));
   };
   return (
     <LoginContainer>
@@ -30,7 +35,7 @@ const Form = (props) => {
       <Grid padding={'0px'}>
         <Button
           disable={id && pw}
-          onClick={onLogin}
+          _onClick={onLogin}
           type="full"
           bgColor="black"
           color="white"

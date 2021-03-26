@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { Text, Input, Button, Grid } from '../elements';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { actionCreators as userActions } from '../redux/modules/user';
+
 const Signup = (props) => {
   const [id, setId] = useState('');
   const [nickname, setNickname] = useState('');
   const [pw, setPw] = useState('');
   const [pwChk, setChk] = useState('');
 
-  const Signup = () => {
+  const dispatch = useDispatch();
+  const signup = () => {
     console.log(id, pw);
   };
   return (
@@ -46,7 +50,7 @@ const Signup = (props) => {
       <Grid padding={'0px'}>
         <Button
           disable={id && pw}
-          onClick={Signup}
+          _onClick={signup}
           type="full"
           bgColor="black"
           color="white"

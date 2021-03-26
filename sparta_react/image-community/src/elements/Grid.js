@@ -1,23 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
+
 const Grid = (props) => {
-  const { is_flex, width, padding, margin, bg, children } = props;
+  const { is_flex, width, margin, padding, bg, children } = props;
+
   const styles = {
-    is_flex,
-    width,
-    padding,
-    margin,
-    bg
+    is_flex: is_flex,
+    width: width,
+    margin: margin,
+    padding: padding,
+    bg: bg
   };
   return (
-    <div>
+    <React.Fragment>
       <GridBox {...styles}>{children}</GridBox>
-    </div>
+    </React.Fragment>
   );
 };
 
 Grid.defaultProps = {
-  children: null,
+  chidren: null,
   is_flex: false,
   width: '100%',
   padding: false,
@@ -37,4 +39,5 @@ const GridBox = styled.div`
       ? `display: flex; align-items: center; justify-content: space-between; `
       : ''}
 `;
+
 export default Grid;

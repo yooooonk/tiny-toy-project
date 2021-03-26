@@ -1,42 +1,64 @@
 import React from 'react';
-import { Grid, Button } from '../elements';
+import { Grid, Button, Text } from '../elements';
 import { Link } from 'react-router-dom';
-
+import { getCookie, deleteCookie } from '../shared/Cookie';
+import { useDispatch, useSelector } from 'react-redux';
+import { actionCreators as userAction } from '../redux/modules/user';
 const Header = (props) => {
-  const { isLogin } = props;
+  const { is_login } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const logout = () => {
-    console.log('로그아웃');
+    dispatch(userAction.logout({}));
   };
 
-  if (isLogin) {
+  if (is_login) {
     return (
-      <Grid is_flex>
-        <Link to="/myInfo">
-          <Button type={'small'}>내 정보</Button>
-        </Link>
-        <Link to="/notice">
-          <Button type={'small'}>알림</Button>
-        </Link>
-        <Button type={'small'} onClick={logout}>
-          로그아웃
-        </Button>
-      </Grid>
+      <div>
+        <Grid is_flex>
+          <Grid is_flex padding="4px 16px">
+            <Grid>
+              <Text margin="0px" size="24px" bold>
+                헬로
+              </Text>
+            </Grid>
+
+            <Grid is_flex>
+              <Button text="내정보"></Button>
+              <Button text="알림"></Button>
+              <Button _onClick={logout} text="로그아웃"></Button>
+            </Grid>
+          </Grid>
+        </Grid>
+      </div>
     );
   } else {
     return (
-      <Grid is_flex>
-        <Link to="/login">
-          <Button type={'small'}>로그인</Button>
-        </Link>
-        <Link to="/signup">
-          <Button type={'small'}>회원가입</Button>
-        </Link>
-      </Grid>
+      <div>
+        <Grid is_flex padding="4px 16px">
+          <Grid>
+            <Text margin="0px" size="24px" bold>
+              헬로
+            </Text>
+          </Grid>
+
+          <Grid is_flex>
+            <Button
+              text="로그인"
+              _onClick={() => {
+                //history.push('/login');
+              }}
+            ></Button>
+            <Button
+              text="회원가입"
+              _onClick={() => {
+                //history.push('/signup');
+              }}
+            ></Button>
+          </Grid>
+        </Grid>
+      </div>
     );
   }
 };
 
-Header.defaultProps = {
-  isLogin: false
-};
 export default Header;
