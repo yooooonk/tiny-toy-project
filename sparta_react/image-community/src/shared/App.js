@@ -15,6 +15,8 @@ import { apiKey } from './firebase';
 import { Button, Grid } from '../elements';
 import Permit from './Permit';
 import PostWrite from '../pages/PostWrite';
+import Search from './Search';
+import Notification from '../pages/Notification';
 function App() {
   const dispatch = useDispatch();
   const _session_key = `firebase:authUser:${apiKey}:[DEFAULT]`;
@@ -34,6 +36,7 @@ function App() {
           <Route path="/login" exact render={(props) => <Login />} />
           <Route path="/signup" exact render={(props) => <Signup />} />
           <Route path="/write" exact component={PostWrite} />
+          <Route path="/noti" exact component={Notification} />
         </ConnectedRouter>
       </Grid>
       <Permit>

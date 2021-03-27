@@ -1,8 +1,8 @@
 import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
 import moment from 'moment';
-import { firestore } from '../../shared/firebase';
-
+import { firestore, storage } from '../../shared/firebase';
+import { actionCreators as imageActions } from './image';
 // actions
 const SET_POST = 'SET_POST';
 const ADD_POST = 'ADD_POST';
@@ -74,16 +74,39 @@ const addPostFB = (contents = '') => {
       contents: contents,
       insert_dt: moment().format('YYYY-MM-DD hh:mm:ss')
     };
-    console.log('읭');
-    postDB
-      .add({ ...user_info, ..._post })
-      .then((doc) => {
-        let post = { user_info, ..._post, id: doc.id };
-        dispatch(addPost(post));
-        history.replace('/');
+    const _image = getState().image.preview;
+
+    const _upload = storage
+      .ref(`images/${user_info.user_id}_${new Date().getTime()}`)
+      .putString(_image, 'data_url');
+
+    _upload
+      .then((snapshot) => {
+        snapshot.ref
+          .getDownloadURL()
+          .then((url) => {
+            return url;
+          })
+          .then((url) => {
+            postDB
+              .add({ ...user_info, ..._post, image_url: url })
+              .then((doc) => {
+                let post = { user_info, ..._post, id: doc.id, image_url: url };
+                dispatch(addPost(post));
+
+                history.replace('/');
+
+                dispatch(imageActions.setPreview(null));
+              })
+              .catch((error) => {
+                alert('앗, 포스트 작성에 문제가 있어요');
+                console.log('addPostFB', error);
+              });
+          });
       })
       .catch((error) => {
-        console.log('addPostFB', error);
+        alert('앗, 이미지 업로드에 문제가 있어요');
+        console.log('앗, 이미지 업로드에 문제가 있어요!', error);
       });
   };
 };
@@ -96,8 +119,7 @@ export default handleActions(
       }),
     [ADD_POST]: (state, action) =>
       produce(state, (draft) => {
-        console.log('포스ㅡ추가');
-        // draft.list.unshift(action.payload.post);
+        draft.list.unshift(action.payload.post);
       })
   },
   initialState

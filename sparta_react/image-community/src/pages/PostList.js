@@ -6,11 +6,12 @@ import { actionCreators as postAction } from '../redux/modules/post';
 const PostList = (props) => {
   const dispatch = useDispatch();
   const post_list = useSelector((state) => {
-    console.log(state.post);
     return state.post.list;
   });
   useEffect(() => {
-    dispatch(postAction.getPostFB());
+    if (post_list.length === 0) {
+      dispatch(postAction.getPostFB());
+    }
   }, []);
   return (
     <div>

@@ -7,6 +7,7 @@ import Upload from '../shared/Upload';
 const PostWrite = (props) => {
   const { history } = props;
   const { is_login } = useSelector((state) => state.user);
+  const { preview } = useSelector((state) => state.image);
   const [contents, setContents] = useState('');
   const dispatch = useDispatch();
 
@@ -40,7 +41,14 @@ const PostWrite = (props) => {
           </Text>
         </Grid>
 
-        <Image shape="rectangle" />
+        <Image
+          shape="rectangle"
+          src={
+            preview
+              ? preview
+              : 'https://www.italmodafurniture.com/media/catalog/product/cache/750743d29f83556ea2d6cae6e5f5579e//d/o/domus-white-nicoletti-sectional-furniture-italian-leather-2-1200x600_2.jpg'
+          }
+        />
       </Grid>
 
       <Grid padding="16px">

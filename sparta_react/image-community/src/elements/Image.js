@@ -1,32 +1,46 @@
-import React from 'react';
 import styled from 'styled-components';
+import React from 'react';
 
 const Image = (props) => {
   const { shape, src, size } = props;
+
   const styles = {
-    src,
-    size
+    src: src,
+    size: size
   };
 
   if (shape === 'circle') {
-    return <ImageCircle {...styles} />;
+    return <ImageCircle {...styles}></ImageCircle>;
   }
 
   if (shape === 'rectangle') {
     return (
       <AspectOutter>
-        <AspectInner {...styles} />
+        <AspectInner {...styles}></AspectInner>
       </AspectOutter>
     );
   }
+
+  return (
+    <React.Fragment>
+      <ImageDefault {...styles}></ImageDefault>
+    </React.Fragment>
+  );
 };
 
 Image.defaultProps = {
-  shape: 'rectangle',
-  src:
-    'https://lh3.googleusercontent.com/proxy/MCgGmXjcM_iYuvWaK97dlU3aNCgvG6wP2S3R1UpXlAJbPrtVV-3UcM6L0uEm1wg2IPatBkZ7pdnkDtAoAjArNIarhMq_rgVUfHxVLY2JJhV2pOP74XKgArRRSImOwU3y85ZtCaa1_Z9dT7dvCOiPo8G6UH52KmU7vP4xptxlJLKOMHEP9ixIvf82Wqmg',
+  shape: 'circle',
+  src: 'https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg',
   size: 36
 };
+
+const ImageDefault = styled.div`
+  --size: ${(props) => props.size}px;
+  width: var(--size);
+  height: var(--size);
+  background-image: url('${(props) => props.src}');
+  background-size: cover;
+`;
 
 const AspectOutter = styled.div`
   width: 100%;
@@ -40,13 +54,16 @@ const AspectInner = styled.div`
   background-image: url('${(props) => props.src}');
   background-size: cover;
 `;
+
 const ImageCircle = styled.div`
   --size: ${(props) => props.size}px;
-  border-radius: 50%;
   width: var(--size);
   height: var(--size);
+  border-radius: var(--size);
+
   background-image: url('${(props) => props.src}');
   background-size: cover;
   margin: 4px;
 `;
+
 export default Image;
