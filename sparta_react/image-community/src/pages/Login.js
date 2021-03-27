@@ -4,6 +4,7 @@ import { getCookie, setCookie, deleteCookie } from '../shared/Cookie';
 
 import { useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
+import { emailCheck } from '../shared/common';
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -15,6 +16,9 @@ const Login = (props) => {
     if (id === '' || pwd === '') {
       window.alert('아이디 혹은 비밀번호가 공란입니다! 입력해주세요!');
       return;
+    }
+    if (!emailCheck(id)) {
+      return alert('이메일 형식으로 입력해주세요');
     }
 
     dispatch(userActions.loginFB(id, pwd));
