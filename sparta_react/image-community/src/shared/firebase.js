@@ -12,7 +12,7 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-
+export const apiKey = firebaseConfig.apiKey;
 const auth = firebase.auth();
 
 export { auth };

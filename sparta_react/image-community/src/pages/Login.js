@@ -1,56 +1,63 @@
-import React, { useState } from 'react';
-import { Text, Input, Button, Grid } from '../elements';
-import styled from 'styled-components';
-import { actionCreators as userActoins } from '../redux/modules/user';
+import React from 'react';
+import { Text, Input, Grid, Button } from '../elements';
+import { getCookie, setCookie, deleteCookie } from '../shared/Cookie';
+
 import { useDispatch } from 'react-redux';
+import { actionCreators as userActions } from '../redux/modules/user';
 
-const Form = (props) => {
-  const [id, setId] = useState('');
-  const [pw, setPw] = useState('');
-
+const Login = (props) => {
   const dispatch = useDispatch();
 
-  const onLogin = () => {
-    dispatch(userActoins.loginAction({ user_name: 'tori' }));
+  const [id, setId] = React.useState('');
+  const [pwd, setPwd] = React.useState('');
+
+  const login = () => {
+    if (id === '' || pwd === '') {
+      window.alert('아이디 혹은 비밀번호가 공란입니다! 입력해주세요!');
+      return;
+    }
+
+    dispatch(userActions.loginFB(id, pwd));
   };
+
   return (
-    <LoginContainer>
-      <Text bold="800" size="2em">
-        로그인
-      </Text>
-      <Grid padding={'0px'}>
-        <Input
-          title={'아이디'}
-          placeholder={'아이디를 입력하세요'}
-          setValue={setId}
-        />
-      </Grid>
-      <Grid padding={'0px'}>
-        <Input
-          title={'비밀번호'}
-          placeholder={'비밀번호를 입력하세요'}
-          setValue={setPw}
-        />
-      </Grid>
-      <Grid padding={'0px'}>
-        <Button
-          disable={id && pw}
-          _onClick={onLogin}
-          type="full"
-          bgColor="black"
-          color="white"
-        >
+    <React.Fragment>
+      <Grid padding="16px">
+        <Text size="32px" bold>
           로그인
-        </Button>
+        </Text>
+
+        <Grid padding="16px 0px">
+          <Input
+            label="아이디"
+            placeholder="아이디를 입력해주세요."
+            _onChange={(e) => {
+              setId(e.target.value);
+            }}
+          />
+        </Grid>
+
+        <Grid padding="16px 0px">
+          <Input
+            label="패스워드"
+            placeholder="패스워드 입력해주세요."
+            type="password"
+            _onChange={(e) => {
+              setPwd(e.target.value);
+            }}
+          />
+        </Grid>
+
+        <Button
+          text="로그인하기"
+          _onClick={() => {
+            console.log('로그인 했어!');
+            login();
+          }}
+        ></Button>
       </Grid>
-    </LoginContainer>
+    </React.Fragment>
   );
 };
 
-const LoginContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-export default Form;
+export default Login;

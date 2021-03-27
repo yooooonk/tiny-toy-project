@@ -4,6 +4,7 @@ import { produce } from 'immer';
 import { setCookie, getCookie, deleteCookie } from '../../shared/Cookie';
 
 import { auth } from '../../shared/firebase';
+import firebase from 'firebase/app';
 
 // actions
 const LOG_OUT = 'LOG_OUT';
@@ -22,11 +23,32 @@ const initialState = {
 };
 
 // middleware actions
-const loginAction = (user) => {
+const loginFB = (id, pwd) => {
   return function (dispatch, getState, { history }) {
-    console.log(history);
-    dispatch(setUser(user));
-    history.push('/');
+    auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then((res) => {
+      auth
+        .signInWithEmailAndPassword(id, pwd)
+        .then((user) => {
+          console.log(user);
+
+          dispatch(
+            setUser({
+              user_name: user.user.displayName,
+              id: id,
+              user_profile: '',
+              uid: user.user.uid
+            })
+          );
+
+          history.push('/');
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+
+          console.log(errorCode, errorMessage);
+        });
+    });
   };
 };
 
@@ -43,7 +65,12 @@ const signupFB = (id, pwd, user_name) => {
           })
           .then(() => {
             dispatch(
-              setUser({ user_name: user_name, id: id, user_profile: '' })
+              setUser({
+                user_name: user_name,
+                id: id,
+                user_profile: '',
+                uid: user.user.uid
+              })
             );
             history.push('/');
           })
@@ -61,6 +88,34 @@ const signupFB = (id, pwd, user_name) => {
         console.log(errorCode, errorMessage);
         // ..
       });
+  };
+};
+
+const loginCheckFB = () => {
+  return function (dispatch, getState, { history }) {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        dispatch(
+          setUser({
+            user_name: user.displayName,
+            user_profile: '',
+            id: user.email,
+            uid: user.uid
+          })
+        );
+      } else {
+        dispatch(logOut());
+      }
+    });
+  };
+};
+
+const logoutFB = () => {
+  return function (dispatch, getState, { history }) {
+    auth.signOut().then(() => {
+      dispatch(logOut());
+      history.replace('/');
+    });
   };
 };
 
@@ -88,8 +143,10 @@ export default handleActions(
 const actionCreators = {
   logOut,
   getUser,
-  loginAction,
-  signupFB
+  signupFB,
+  loginFB,
+  loginCheckFB,
+  logoutFB
 };
 
 export { actionCreators };
