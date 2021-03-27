@@ -1,65 +1,54 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = (props) => {
-  const { text, _onClick, is_float, children, margin, width } = props;
+import { Text, Grid } from './index';
 
-  if (is_float) {
+const Input = (props) => {
+  const { label, placeholder, _onChange, type, multiLine } = props;
+
+  if (multiLine) {
     return (
-      <React.Fragment>
-        <FloatButton onClick={_onClick}>{text ? text : children}</FloatButton>
-      </React.Fragment>
+      <Grid>
+        <Text margin="0px">{label}</Text>
+        <ElTextarea
+          rows={10}
+          placeholder={placeholder}
+          onChange={_onChange}
+        ></ElTextarea>
+      </Grid>
     );
   }
 
-  const styles = {
-    margin: margin,
-    width: width
-  };
-
   return (
     <React.Fragment>
-      <ElButton {...styles} onClick={_onClick}>
-        {text ? text : children}
-      </ElButton>
+      <Grid>
+        <Text margin="0px">{label}</Text>
+        <ElInput type={type} placeholder={placeholder} onChange={_onChange} />
+      </Grid>
     </React.Fragment>
   );
 };
 
-Button.defaultProps = {
-  text: false,
-  children: null,
-  _onClick: () => {},
-  is_float: false,
-  margin: false,
-  width: '100%'
+Input.defaultProps = {
+  multiLine: false,
+  label: '텍스트',
+  placeholder: '텍스트를 입력해주세요.',
+  type: 'text',
+  _onChange: () => {}
 };
 
-const ElButton = styled.button`
-  width: ${(props) => props.width};
-  background-color: #212121;
-  color: #ffffff;
-  padding: 12px 0px;
+const ElTextarea = styled.textarea`
+  border: 1px solid #212121;
+  width: 100%;
+  padding: 12px 4px;
   box-sizing: border-box;
-  border: none;
-  ${(props) => (props.margin ? `margin: ${props.margin};` : '')}
 `;
 
-const FloatButton = styled.button`
-  width: 50px;
-  height: 50px;
-  background-color: #212121;
-  color: #ffffff;
+const ElInput = styled.input`
+  border: 1px solid #212121;
+  width: 100%;
+  padding: 12px 4px;
   box-sizing: border-box;
-  font-size: 36px;
-  font-weight: 800;
-  position: fixed;
-  bottom: 50px;
-  right: 16px;
-  text-align: center;
-  vertical-align: middle;
-  border: none;
-  border-radius: 50px;
 `;
 
-export default Button;
+export default Input;
