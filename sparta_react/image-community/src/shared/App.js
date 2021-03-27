@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import { apiKey } from './firebase';
 import { Button, Grid } from '../elements';
 import Permit from './Permit';
+import PostWrite from '../pages/PostWrite';
 function App() {
   const dispatch = useDispatch();
   const _session_key = `firebase:authUser:${apiKey}:[DEFAULT]`;
@@ -32,10 +33,15 @@ function App() {
           <Route path="/" exact component={PostList} />
           <Route path="/login" exact render={(props) => <Login />} />
           <Route path="/signup" exact render={(props) => <Signup />} />
+          <Route path="/write" exact component={PostWrite} />
         </ConnectedRouter>
       </Grid>
       <Permit>
-        <Button is_float text="+"></Button>
+        <Button
+          is_float
+          text="+"
+          _onClick={() => history.push('/write')}
+        ></Button>
       </Permit>
     </div>
   );
