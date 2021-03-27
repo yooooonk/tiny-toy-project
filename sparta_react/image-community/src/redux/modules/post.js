@@ -1,6 +1,6 @@
 import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
-
+import moment from 'moment';
 import { firestore } from '../../shared/firebase';
 
 // actions
@@ -16,18 +16,18 @@ const initialState = {
   list: []
 };
 
-const initalPost = {
-  id: 0,
+const initialPost = {
+  /* id: 0,
   user_info: {
     user_name: 'yoonk',
     user_profile:
       'https://lh3.googleusercontent.com/proxy/MCgGmXjcM_iYuvWaK97dlU3aNCgvG6wP2S3R1UpXlAJbPrtVV-3UcM6L0uEm1wg2IPatBkZ7pdnkDtAoAjArNIarhMq_rgVUfHxVLY2JJhV2pOP74XKgArRRSImOwU3y85ZtCaa1_Z9dT7dvCOiPo8G6UH52KmU7vP4xptxlJLKOMHEP9ixIvf82Wqmg'
-  },
+  }, */
   image_url:
     'https://lh3.googleusercontent.com/proxy/MCgGmXjcM_iYuvWaK97dlU3aNCgvG6wP2S3R1UpXlAJbPrtVV-3UcM6L0uEm1wg2IPatBkZ7pdnkDtAoAjArNIarhMq_rgVUfHxVLY2JJhV2pOP74XKgArRRSImOwU3y85ZtCaa1_Z9dT7dvCOiPo8G6UH52KmU7vP4xptxlJLKOMHEP9ixIvf82Wqmg',
-  contents: '헤이헤이헤이!!',
-  comment_cnt: 10,
-  insert_dt: '2021-03-26'
+  contents: '',
+  comment_cnt: 0,
+  insert_dt: moment().format('YYYY-MM-DD hh:mm:ss')
 };
 
 // middleware actions
@@ -58,6 +58,35 @@ const getPostFB = () => {
     });
   };
 };
+
+const addPostFB = (contents = '') => {
+  return function (dispatch, getState, { history }) {
+    const postDB = firestore.collection('post');
+    const _user = getState().user.user;
+
+    const user_info = {
+      user_name: _user.user_name,
+      user_id: _user.uid,
+      user_profile: _user.user_profile
+    };
+    const _post = {
+      ...initialPost,
+      contents: contents,
+      insert_dt: moment().format('YYYY-MM-DD hh:mm:ss')
+    };
+    console.log('읭');
+    postDB
+      .add({ ...user_info, ..._post })
+      .then((doc) => {
+        let post = { user_info, ..._post, id: doc.id };
+        dispatch(addPost(post));
+        history.replace('/');
+      })
+      .catch((error) => {
+        console.log('addPostFB', error);
+      });
+  };
+};
 // reducer
 export default handleActions(
   {
@@ -65,16 +94,22 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list = action.payload.post_list;
       }),
-    [ADD_POST]: (state, action) => produce(state, (draft) => {})
+    [ADD_POST]: (state, action) =>
+      produce(state, (draft) => {
+        console.log('포스ㅡ추가');
+        // draft.list.unshift(action.payload.post);
+      })
   },
   initialState
 );
 
+console.log(handleActions, 'handle');
 // action creator export
 const actionCreators = {
   setPost,
   addPost,
-  getPostFB
+  getPostFB,
+  addPostFB
 };
 
 export { actionCreators };
