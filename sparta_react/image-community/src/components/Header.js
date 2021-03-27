@@ -1,18 +1,12 @@
 import React from 'react';
 import { Grid, Button, Text } from '../elements';
-import { Link } from 'react-router-dom';
-import { getCookie, deleteCookie } from '../shared/Cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as userAction } from '../redux/modules/user';
 import { history } from '../redux/configureStore';
 import { apiKey } from '../shared/firebase';
-import Permit from '../shared/Permit';
 const Header = (props) => {
   const { is_login } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const logout = () => {
-    dispatch(userAction.logoutFB());
-  };
 
   /*   <Permit>
     <div>

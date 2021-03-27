@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import PostList from '../pages/PostList';
 import Login from '../pages/Login';
 
