@@ -1,6 +1,6 @@
 import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
-import { firestore } from '../../shared/firebase';
+import { firestore, realtime } from '../../shared/firebase';
 import firebase from 'firebase/app';
 import 'moment';
 import moment from 'moment';
@@ -85,12 +85,12 @@ const addCommentFB = (post_id, contents) => {
                 comment_cnt: parseInt(post.comment_cnt) + 1
               })
             );
-
-            /* const _noti_item = realtime
+            //게시글을 작성한 사람한테 알람이 감, comment 쓴 사람이랑 내 id랑 비교해서 처리해야함
+            const _noti_titem = realtime
               .ref(`noti/${post.user_info.user_id}/list`)
-              .push();
+              .push(); // 공간을 일단 할당
 
-            _noti_item.set(
+            _noti_titem.set(
               {
                 post_id: post.id,
                 user_name: comment.user_name,
@@ -99,14 +99,13 @@ const addCommentFB = (post_id, contents) => {
               },
               (err) => {
                 if (err) {
-                  console.log('알림 저장에 실패했어요! 8ㅛ8');
+                  console.log('알림저장 실패', err);
                 } else {
                   const notiDB = realtime.ref(`noti/${post.user_info.user_id}`);
-
                   notiDB.update({ read: false });
                 }
               }
-            ); */
+            );
           }
         });
     });
