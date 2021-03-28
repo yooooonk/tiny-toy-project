@@ -32,8 +32,6 @@ const Header = (props) => {
 
   const is_session = sessionStorage.getItem(_session_key) ? true : false;
 
-  console.log(is_session);
-
   if (is_login && is_session) {
     return (
       <React.Fragment>
