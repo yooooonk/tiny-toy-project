@@ -15,7 +15,7 @@ import { apiKey } from './firebase';
 import { Button, Grid } from '../elements';
 import Permit from './Permit';
 import PostWrite from '../pages/PostWrite';
-import Search from './Search';
+import PostDetail from '../pages/PostDetail';
 import Notification from '../pages/Notification';
 function App() {
   const dispatch = useDispatch();
@@ -36,6 +36,9 @@ function App() {
           <Route path="/login" exact render={(props) => <Login />} />
           <Route path="/signup" exact render={(props) => <Signup />} />
           <Route path="/write" exact component={PostWrite} />
+          <Route path="/write" exact component={PostWrite} />
+          <Route path="/write/:id" exact component={PostWrite} />
+          <Route path="/post/:id" exact component={PostDetail} />
           <Route path="/noti" exact component={Notification} />
         </ConnectedRouter>
       </Grid>
