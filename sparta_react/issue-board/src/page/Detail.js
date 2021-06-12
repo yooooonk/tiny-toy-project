@@ -7,7 +7,7 @@ import { issueActions } from '../redux/modules/issue';
 const Detail = (props) => {
   const { detail } = useSelector((state) => state.issue);
   const i = detail[0];
-
+  console.log(i);
   const data = {
     number: i.number,
     title: i.title,
