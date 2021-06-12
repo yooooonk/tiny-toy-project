@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import IssueCard from '../components/IssueCard';
-const Detail = () => {
+const Detail = (props) => {
+  const { history, data } = props;
+  console.log(history);
   return (
     <Container>
       <Header>

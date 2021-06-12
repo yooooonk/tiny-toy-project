@@ -8,7 +8,9 @@ export const IssueApi = {
   getIssues: (page = 1) => {
     return axios.get(`/issues`, {
       params: {
-        page
+        sort: 'comments',
+        page,
+        per_page: 5
       }
     });
   },
