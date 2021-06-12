@@ -6,28 +6,36 @@ import Header from '../components/Header';
 import { issueActions } from '../redux/modules/issue';
 const Detail = (props) => {
   const { detail } = useSelector((state) => state.issue);
-  console.log(detail);
-  /* const data = {
+  const i = detail[0];
+
+  const data = {
     number: i.number,
     title: i.title,
     comments: i.comments,
     userName: i.user.login,
     created: i.created_at
-  }; */
+  };
   return (
     <Container>
       <Header url={props.match.url} />
       <Info>
         <img src={detail[0].user.avatar_url} alt="writer" />
-        {/* <IssueCard /> */}
+        <IssueCard data={data} />
       </Info>
-      <Body>내요오옹</Body>
+      <Body>{detail.body}</Body>
     </Container>
   );
 };
 
 const Container = styled.div``;
-const Info = styled.section``;
+const Info = styled.section`
+  display: flex;
+
+  & img {
+    width: 10%;
+    height: 10%;
+  }
+`;
 
 const Img = styled.img``;
 
