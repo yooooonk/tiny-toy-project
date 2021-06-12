@@ -17,8 +17,8 @@ const Main = (props) => {
     dispatch(issueActions.fetchIssues());
   }, []);
 
-  const onClickCard = (id) => {
-    console.log(props.match);
+  const onClickCard = async (id) => {
+    await dispatch(issueActions.setDetailIssue(id));
     history.push(`${match.url}issue/${id}`);
   };
 

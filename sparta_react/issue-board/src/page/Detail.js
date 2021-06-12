@@ -1,18 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import IssueCard from '../components/IssueCard';
 import Header from '../components/Header';
+import { issueActions } from '../redux/modules/issue';
 const Detail = (props) => {
-  const { match } = props;
-  const { issueList } = useSelector((state) => state.issue);
-  let issue;
-  useEffect(() => {
-    const issue = issueList.filter((i) => {
-      return i.id === parseInt(match.params.id);
-    });
-  }, []);
-  console.log(issueList);
+  const { detail } = useSelector((state) => state.issue);
+  console.log(detail);
   /* const data = {
     number: i.number,
     title: i.title,
@@ -24,7 +18,7 @@ const Detail = (props) => {
     <Container>
       <Header url={props.match.url} />
       <Info>
-        <img src="" alt="writer" />
+        <img src={detail[0].user.avatar_url} alt="writer" />
         {/* <IssueCard /> */}
       </Info>
       <Body>내요오옹</Body>
