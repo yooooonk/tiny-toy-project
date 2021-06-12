@@ -4,31 +4,20 @@ import IssueCard from '../components/IssueCard';
 import { IssueApi } from '../shared/api';
 import Header from '../components/Header';
 import AddBox from '../components/AddBox';
+import { useDispatch, useSelector } from 'react-redux';
+import { issueActions } from '../redux/modules/issue';
 
 const Main = (props) => {
   const { history, match } = props;
+
+  const dispatch = useDispatch();
+  const { issueList } = useSelector((state) => state.issue);
+
   useEffect(() => {
-    console.log('실행');
-    fetchIssue();
+    dispatch(issueActions.fetchIssues());
   }, []);
 
-  const [issueList, setIssueList] = useState([]);
-  const [page, setPage] = useState(1);
-
-  const fetchIssue = async () => {
-    try {
-      const issue = await IssueApi.getIssues(page);
-      setIssueList(issue.data);
-      console.log(issue.data[0]);
-      // setIssueList(issueList);
-    } catch (error) {
-      console.error(error);
-      alert('목록을 가져올 수 없습니다');
-    }
-  };
-
   const onClickCard = (id) => {
-    //history.pushState();
     console.log(props.match);
     history.push(`${match.url}issue/${id}`);
   };
