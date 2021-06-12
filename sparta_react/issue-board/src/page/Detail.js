@@ -19,15 +19,18 @@ const Detail = (props) => {
     <Container>
       <Header url={props.match.url} />
       <Info>
-        <img src={detail[0].user.avatar_url} alt="writer" />
+        <img src={i.user.avatar_url} alt="writer" />
         <IssueCard data={data} />
       </Info>
-      <Body>{detail.body}</Body>
+      <Body>{i.body}</Body>
     </Container>
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 const Info = styled.section`
   display: flex;
 
