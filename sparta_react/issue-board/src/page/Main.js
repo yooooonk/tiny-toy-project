@@ -1,5 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import IssueCard from '../components/IssueCard';
 
-export const Main = () => {
-  return <div>메인</div>;
+const Main = () => {
+  /* useEffect(()=>{
+        
+    }) */
+  return (
+    <div>
+      <IssueCard></IssueCard>
+    </div>
+  );
 };
+
+export default Main;

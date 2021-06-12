@@ -1,8 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 
-export const Header = () => {
-  return <Container>Anguar/Angur-cli</Container>;
+const Header = () => {
+  return <div>Angurl/dlfjd</div>;
 };
 
-const Container = styled.div``;
+export default Header;

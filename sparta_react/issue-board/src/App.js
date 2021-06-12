@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import { Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import { Main } from './page/Main';
-import { Detail } from './page/Detail';
-import { Header } from './components/Header';
+
+import Header from './components/Header';
+import Main from './page/Main';
+import Detail from './page/Detail';
 
 function App() {
   return (
@@ -18,7 +19,6 @@ function App() {
 const Container = styled.div`
   width: 100%;
   height: 100vh;
-  background-color: pink;
 `;
 
 export default withRouter(App);
