@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import AddBox from '../components/AddBox';
 import { useDispatch, useSelector } from 'react-redux';
 import { issueActions } from '../redux/modules/issue';
+import _ from 'lodash';
 
 const Main = (props) => {
   const { history, match } = props;
@@ -16,6 +17,16 @@ const Main = (props) => {
   useEffect(() => {
     dispatch(issueActions.fetchIssues());
   }, []);
+
+  const readMore = _.throttle((e) => {
+    console.log('스크롤');
+    const scrollPer = Math.floor(e.target.scrollTop/(e.target.scrollHeight-e.target.clientHeight)*100)
+
+    if(scrollPer>70){
+      dispatch(issueActions.fetchIssues());
+      
+    }
+  });
 
   const onClickCard = async (id) => {
     await dispatch(issueActions.setDetailIssue(id));
@@ -36,11 +47,16 @@ const Main = (props) => {
   });
 
   return (
-    <div>
+    <Container onScroll={readMore}>
       <Header url={props.match.url} />
       {issueListComponent}
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 
 export default Main;

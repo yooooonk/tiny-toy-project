@@ -4,7 +4,8 @@ import { IssueApi } from '../../shared/api';
 // initialState
 const initialState = {
   issueList: [],
-  detail: ''
+  detail: '',
+  page:1,
 };
 
 // actions
