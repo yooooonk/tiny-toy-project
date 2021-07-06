@@ -1,4 +1,4 @@
 node_modules
 .sass-cache
 dist
-lecture-frontend-dev-env
+lecture-frontend-dev-env/node_modules
