@@ -7,10 +7,5 @@ class Person{
     }
 }
 
-const inkuk = new Person('사람',30);
 
-
-// js 프로토타입
-var user = {name:'capt',age:100};
-
-var admin = {name:'capt',age:100, role:'admin'};
+var capt = new Person('캡틴',100)
