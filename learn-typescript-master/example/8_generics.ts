@@ -21,10 +21,10 @@ interface Developer<T> {
 const tony: Developer<number> = { name: 'tony', age: 100 };
 
 // 제네릭 타입 제한 - 구체적인 타입
-function getNumberAndArray<T>(value: T): T {
+/* function getNumberAndArray<T>(value: T): T {
   value.length; // X
   return value;
-}
+} */
 
 function getNumberAndArray<T>(value: T[]): T[] {
   value.length; // O
@@ -48,6 +48,16 @@ function getAllowedOptions<T extends keyof ShoppingItems>(option: T): T {
     return option;
   }
 }
-getAllowedOptions('nothing');
+//getAllowedOptions('nothing');
 // const a = getAllowedOptions('name');
 // a.toUpperCase(); // Name
+
+interface Dropdown<T>{
+  value:T;
+  selected:boolean;
+}
+
+const obj:Dropdown<string> = {
+  value:'abc',
+  selected:false
+}
