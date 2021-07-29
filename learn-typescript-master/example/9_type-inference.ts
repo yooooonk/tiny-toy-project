@@ -5,13 +5,11 @@ function logA(a = 'a') {
   return b;
 }
 
+
+
 interface Dropdown<T> {
   value: T
   title: string;
-}
-var items: Dropdown<number> = {
-  value: 10,
-  title: 'a'
 }
 
 interface DetailedDropdown<T> extends Dropdown<T> {
@@ -24,3 +22,17 @@ var detailItems: DetailedDropdown<number> = {
   description: 'b',
   tag: 'c'
 }
+
+<div id="app">hi</div>
+
+
+
+var div = document.querySelector('div') 
+
+if(div){
+  div.innerText;
+}
+
+
+
+
