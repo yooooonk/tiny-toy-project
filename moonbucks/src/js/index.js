@@ -39,13 +39,21 @@ const addMenu = (menuItem) => {
   updateCount();
 };
 
-const updateMenu = (target) => {
-  const $currentMenu = target.closest('li').querySelector('.menu-name');
-
-  const editedMenu = window.prompt('메뉴를 수정하세요', $currentMenu.innerText);
-  $currentMenu.innerText = editedMenu;
+const updateMenu = (currentMenu) => {
+  const editedMenu = window.prompt('메뉴를 수정하세요', currentMenu.innerText);
+  currentMenu.innerText = editedMenu;
 };
 
+const removeMenu = (currentMenu) => {
+  if (
+    window.confirm(
+      `${currentMenu.querySelector('.menu-name').innerText}를 삭제하겠습니까?`
+    )
+  ) {
+    currentMenu.remove();
+    updateCount();
+  }
+};
 function App() {
   $('#espresso-menu-form').addEventListener('submit', (e) =>
     e.preventDefault()
@@ -62,9 +70,15 @@ function App() {
   });
 
   menuList.addEventListener('click', (e) => {
-    if (target.classList.contains('menu-edit-button')) {
+    if (e.target.classList.contains('menu-edit-button')) {
       // 어떤 버튼에 이벤트를 달았는지 표헌하는게 좋을 것 같음
-      updateMenu(e.target);
+      updateMenu(e.target.closest('li').querySelector('.menu-name'));
+    }
+  });
+
+  menuList.addEventListener('click', (e) => {
+    if (e.target.classList.contains('menu-remove-button')) {
+      removeMenu(e.target.closest('li'));
     }
   });
 }
