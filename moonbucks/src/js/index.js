@@ -40,12 +40,10 @@ const addMenu = (menuItem) => {
 };
 
 const updateMenu = (target) => {
-  if (target.classList.contains('menu-edit-button')) {
-    const menuName = target.closest('li').querySelector('.menu-name').innerText;
+  const $currentMenu = target.closest('li').querySelector('.menu-name');
 
-    const editedMenu = window.prompt('메뉴를 수정하세요', menuName);
-    target.closest('li').querySelector('.menu-name').innerText = editedMenu;
-  }
+  const editedMenu = window.prompt('메뉴를 수정하세요', $currentMenu.innerText);
+  $currentMenu.innerText = editedMenu;
 };
 
 function App() {
@@ -64,7 +62,10 @@ function App() {
   });
 
   menuList.addEventListener('click', (e) => {
-    updateMenu(e.target);
+    if (target.classList.contains('menu-edit-button')) {
+      // 어떤 버튼에 이벤트를 달았는지 표헌하는게 좋을 것 같음
+      updateMenu(e.target);
+    }
   });
 }
 
