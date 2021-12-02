@@ -20,15 +20,27 @@ https://www.udemy.com/course/vanilla-js-lv1/
 
 # 요구사항 정리
 
+### 메뉴판 만들기
+
 - 추가
-  [] 확인 버튼을 누르면 메뉴가 추가된다
-  [] 엔터를 누르면 메뉴가 추가된다
-  [] 메뉴가 추가되고 input이 초기화된다
-  [] count가 증가한다
+  [v] 확인 버튼을 누르면 메뉴가 추가된다
+  [v] 엔터를 누르면 메뉴가 추가된다
+  [v] 메뉴가 추가되고 input이 초기화된다
+  [v] count가 증가한다
+  [v] 빈 값은 추가되지 않는다
 - 수정
-  [] prompt가 뜬다
-  [] 확인버튼을 누르면 수정한 내용이 목록에 반영된다
+  [v] prompt가 뜬다
+  [v] 확인버튼을 누르면 수정한 내용이 목록에 반영된다
 - 삭제
-  [] 삭제를 묻는 confirm이 뜬다
-  [] 확인을 누르면 메뉴가 삭제된다
-  [] count가 감소한다
+  [v] 삭제를 묻는 confirm이 뜬다
+  [v] 확인을 누르면 메뉴가 삭제된다
+  [v] count가 감소한다
+
+# 새로 알게 된 것
+
+- method : closest,insertAdjacentHTML
+- 이렇게 쓸 수 있음
+
+```javascript
+const $ = (selector) => document.querySelector(selector);
+```
