@@ -39,6 +39,15 @@ const addMenu = (menuItem) => {
   updateCount();
 };
 
+const updateMenu = (target) => {
+  if (target.classList.contains('menu-edit-button')) {
+    const menuName = target.closest('li').querySelector('.menu-name').innerText;
+
+    const editedMenu = window.prompt('메뉴를 수정하세요', menuName);
+    target.closest('li').querySelector('.menu-name').innerText = editedMenu;
+  }
+};
+
 function App() {
   $('#espresso-menu-form').addEventListener('submit', (e) =>
     e.preventDefault()
@@ -52,6 +61,10 @@ function App() {
 
   submitButton.addEventListener('click', () => {
     addMenu(menuInput.value);
+  });
+
+  menuList.addEventListener('click', (e) => {
+    updateMenu(e.target);
   });
 }
 
