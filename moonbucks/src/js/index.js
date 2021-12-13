@@ -44,12 +44,18 @@ function App() {
     $('.menu-count').innerText = `총 ${menuList.childNodes.length}개`;
   };
 
-  const updateMenu = (currentMenu) => {
+  const updateMenu = (e) => {
+    const menuId = e.target.closest('li').dataset.menuId;
+    const $currentMenu = e.target.closest('li').querySelector('.menu-name');
     const editedMenu = window.prompt(
       '메뉴를 수정하세요',
-      currentMenu.innerText
+      $currentMenu.innerText
     );
-    currentMenu.innerText = editedMenu;
+
+    menu[menuId].name = editedMenu;
+    $currentMenu.innerText = editedMenu;
+
+    store.setLocalStorage(menu);
   };
 
   const removeMenu = (currentMenu) => {
@@ -72,6 +78,7 @@ function App() {
       .join('');
     menuList.innerHTML = lists;
 
+    store.setLocalStorage(menu);
     resetInput();
     updateCount();
   };
@@ -92,7 +99,7 @@ function App() {
   menuList.addEventListener('click', (e) => {
     if (e.target.classList.contains('menu-edit-button')) {
       // 어떤 버튼에 이벤트를 달았는지 표헌하는게 좋을 것 같음
-      updateMenu(e.target.closest('li').querySelector('.menu-name'));
+      updateMenu(e);
     }
   });
 
