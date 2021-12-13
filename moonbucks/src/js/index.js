@@ -58,13 +58,20 @@ function App() {
     store.setLocalStorage(menu);
   };
 
-  const removeMenu = (currentMenu) => {
+  const removeMenu = (e) => {
+    const currentMenu = e.target.closest('li');
     if (
       window.confirm(
         `${currentMenu.querySelector('.menu-name').innerText}를 삭제하겠습니까?`
       )
     ) {
+      const menuId = currentMenu.dataset.menuId;
+      menu.splice(menuId, 1);
+
+      store.setLocalStorage(menu);
+
       currentMenu.remove();
+
       updateCount();
     }
   };
@@ -105,7 +112,7 @@ function App() {
 
   menuList.addEventListener('click', (e) => {
     if (e.target.classList.contains('menu-remove-button')) {
-      removeMenu(e.target.closest('li'));
+      removeMenu(e);
     }
   });
 }
