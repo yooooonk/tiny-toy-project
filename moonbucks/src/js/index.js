@@ -20,6 +20,7 @@ function App() {
     if (store.getLocalStorage().length > 1) {
       this.menu = store.getLocalStorage();
     }
+    render();
   };
 
   const menuItemTemplate = (
@@ -40,6 +41,12 @@ function App() {
                                 삭제
                             </button>
                             </li>`;
+  const render = () => {
+    const lists = this.menu
+      .map((menu, idx) => menuItemTemplate(menu.name, idx))
+      .join('');
+    menuList.innerHTML = lists;
+  };
 
   const resetInput = () => {
     menuInput.value = '';
@@ -72,10 +79,8 @@ function App() {
     ) {
       const menuId = currentMenu.dataset.menuId;
       this.menu.splice(menuId, 1);
-
-      store.setLocalStorage(menu);
-
-      currentMenu.remove();
+      render();
+      store.setLocalStorage(this.menu);
 
       updateCount();
     }
@@ -84,12 +89,7 @@ function App() {
     if (menuItem.trim().length === 0) return alert('메뉴를 입력해주세요');
 
     this.menu.push({ name: menuItem });
-    // 메뉴 배열을 렌더링
-    const lists = this.menu
-      .map((menu, idx) => menuItemTemplate(menu.name, idx))
-      .join('');
-    menuList.innerHTML = lists;
-
+    render();
     store.setLocalStorage(this.menu);
     resetInput();
     updateCount();
