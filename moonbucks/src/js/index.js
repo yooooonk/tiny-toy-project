@@ -15,11 +15,19 @@ const menuList = $('#espresso-menu-list');
 const submitButton = $('#espresso-menu-submit-button');
 
 function App() {
-  this.menu = [];
+  this.menu = {
+    espresso: [],
+    frappuccino: [],
+    blended: [],
+    teavana: [],
+    desert: []
+  };
+  this.category = 'espresso';
   this.init = () => {
-    if (store.getLocalStorage().length > 1) {
+    if (store.getLocalStorage()) {
       this.menu = store.getLocalStorage();
     }
+
     render();
   };
 
@@ -42,7 +50,7 @@ function App() {
                             </button>
                             </li>`;
   const render = () => {
-    const lists = this.menu
+    const lists = this.menu[this.category]
       .map((menu, idx) => menuItemTemplate(menu.name, idx))
       .join('');
     menuList.innerHTML = lists;
@@ -64,10 +72,10 @@ function App() {
       $currentMenu.innerText
     );
 
-    menu[menuId].name = editedMenu;
+    this.menu[this.category][menuId].name = editedMenu;
     $currentMenu.innerText = editedMenu;
 
-    store.setLocalStorage(menu);
+    store.setLocalStorage(this.menu);
   };
 
   const removeMenu = (e) => {
@@ -78,7 +86,7 @@ function App() {
       )
     ) {
       const menuId = currentMenu.dataset.menuId;
-      this.menu.splice(menuId, 1);
+      this.menu[this.category].splice(menuId, 1);
       render();
       store.setLocalStorage(this.menu);
 
@@ -87,12 +95,17 @@ function App() {
   };
   const addMenu = (menuItem) => {
     if (menuItem.trim().length === 0) return alert('메뉴를 입력해주세요');
-
-    this.menu.push({ name: menuItem });
+    this.menu[this.category].push({ name: menuItem });
     render();
     store.setLocalStorage(this.menu);
     resetInput();
     updateCount();
+  };
+
+  const renderMenuByCategory = (target) => {
+    this.category = target.dataset['categoryName'];
+    $('h2').innerText = `${target.innerText} 메뉴 관리`;
+    render();
   };
   $('#espresso-menu-form').addEventListener('submit', (e) =>
     e.preventDefault()
@@ -118,6 +131,14 @@ function App() {
   menuList.addEventListener('click', (e) => {
     if (e.target.classList.contains('menu-remove-button')) {
       removeMenu(e);
+    }
+  });
+
+  // 메뉴판 이동 이벤트
+  $('nav').addEventListener('click', (e) => {
+    const isCategoryButton = e.target.classList.contains('cafe-category-name');
+    if (isCategoryButton) {
+      renderMenuByCategory(e.target);
     }
   });
 }
