@@ -20,7 +20,7 @@ https://www.udemy.com/course/vanilla-js-lv1/
 
 # 요구사항 정리
 
-### 메뉴판 만들기
+### Step1. 메뉴판 만들기
 
 - 추가
   [v] 확인 버튼을 누르면 메뉴가 추가된다
@@ -36,6 +36,22 @@ https://www.udemy.com/course/vanilla-js-lv1/
   [v] 확인을 누르면 메뉴가 삭제된다
   [v] count가 감소한다
 
+### Step2. 메뉴판 여러개 만들기
+
+- 데이터 관리
+  [v] local storage에 데이터를 저장한다
+  [v] local storage에서 데이터를 읽어온다
+- 각 메뉴판 관리
+  [v] 프라푸치노
+  [v] 블렌디드
+  [v] 티바나
+  [v] 디저트
+  [v] 페이지에 최초로 접근할 때는 에스프레소 메뉴가 먼저 보이게 한다
+- 품절
+  [v] 품절 버튼을 추가한다
+  [v] 품절 버튼을 클릭하면 품절 상태로 변경한다
+  [v] sold-out class를 추가한다
+
 # 새로 알게 된 것
 
 - method : closest,insertAdjacentHTML
@@ -44,3 +60,7 @@ https://www.udemy.com/course/vanilla-js-lv1/
 ```javascript
 const $ = (selector) => document.querySelector(selector);
 ```
+
+- 프론트엔드에서 데이터를 상태라고 함
+  - 상태 : 변할 수 있는 값 - 관리를 해줘야한다
+- 생성자 함수 // TODO : class로 바꿔보기
