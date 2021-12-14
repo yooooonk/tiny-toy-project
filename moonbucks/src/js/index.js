@@ -6,7 +6,7 @@ const store = {
     localStorage.setItem('menu', JSON.stringify(menu));
   },
   getLocalStorage() {
-    localStorage.getItem('menu');
+    return JSON.parse(localStorage.getItem('menu'));
   }
 };
 
@@ -15,7 +15,12 @@ const menuList = $('#espresso-menu-list');
 const submitButton = $('#espresso-menu-submit-button');
 
 function App() {
-  const menu = [];
+  this.menu = [];
+  this.init = () => {
+    if (store.getLocalStorage().length > 1) {
+      this.menu = store.getLocalStorage();
+    }
+  };
 
   const menuItemTemplate = (
     menuItem,
@@ -66,7 +71,7 @@ function App() {
       )
     ) {
       const menuId = currentMenu.dataset.menuId;
-      menu.splice(menuId, 1);
+      this.menu.splice(menuId, 1);
 
       store.setLocalStorage(menu);
 
@@ -78,14 +83,14 @@ function App() {
   const addMenu = (menuItem) => {
     if (menuItem.trim().length === 0) return alert('메뉴를 입력해주세요');
 
-    menu.push({ name: menuItem });
+    this.menu.push({ name: menuItem });
     // 메뉴 배열을 렌더링
-    const lists = menu
+    const lists = this.menu
       .map((menu, idx) => menuItemTemplate(menu.name, idx))
       .join('');
     menuList.innerHTML = lists;
 
-    store.setLocalStorage(menu);
+    store.setLocalStorage(this.menu);
     resetInput();
     updateCount();
   };
@@ -117,4 +122,6 @@ function App() {
   });
 }
 
-App();
+const app = new App();
+
+app.init();
