@@ -1,14 +1,6 @@
 // 메뉴추가
-const $ = (selector) => document.querySelector(selector);
-
-const store = {
-  setLocalStorage(menu) {
-    localStorage.setItem('menu', JSON.stringify(menu));
-  },
-  getLocalStorage() {
-    return JSON.parse(localStorage.getItem('menu'));
-  }
-};
+import { $ } from './utils/dom';
+import { store } from './store/index';
 
 const menuInput = $('#espresso-menu-name');
 const menuList = $('#espresso-menu-list');
@@ -27,7 +19,7 @@ function App() {
     if (store.getLocalStorage()) {
       this.menu = store.getLocalStorage();
     }
-
+    initEventListeners();
     render();
   };
 
@@ -125,45 +117,49 @@ function App() {
     $('h2').innerText = `${target.innerText} 메뉴 관리`;
     render();
   };
-  $('#espresso-menu-form').addEventListener('submit', (e) =>
-    e.preventDefault()
-  );
 
-  menuInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      addMenu(e.target.value);
-    }
-  });
+  const initEventListeners = () => {
+    $('#espresso-menu-form').addEventListener('submit', (e) =>
+      e.preventDefault()
+    );
 
-  submitButton.addEventListener('click', () => {
-    addMenu(menuInput.value);
-  });
+    menuInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        addMenu(e.target.value);
+      }
+    });
 
-  menuList.addEventListener('click', (e) => {
-    if (e.target.classList.contains('menu-edit-button')) {
-      // 어떤 버튼에 이벤트를 달았는지 표헌하는게 좋을 것 같음
-      updateMenu(e);
-      return;
-    }
+    submitButton.addEventListener('click', () => {
+      addMenu(menuInput.value);
+    });
 
-    if (e.target.classList.contains('menu-remove-button')) {
-      removeMenu(e);
-      return;
-    }
+    menuList.addEventListener('click', (e) => {
+      if (e.target.classList.contains('menu-edit-button')) {
+        // 어떤 버튼에 이벤트를 달았는지 표헌하는게 좋을 것 같음
+        updateMenu(e);
+        return;
+      }
 
-    if (e.target.classList.contains('menu-sold-out-button')) {
-      toggleSoldOut(e);
-      return;
-    }
-  });
+      if (e.target.classList.contains('menu-remove-button')) {
+        removeMenu(e);
+        return;
+      }
 
-  // 메뉴판 이동 이벤트
-  $('nav').addEventListener('click', (e) => {
-    const isCategoryButton = e.target.classList.contains('cafe-category-name');
-    if (isCategoryButton) {
-      renderMenuByCategory(e.target);
-    }
-  });
+      if (e.target.classList.contains('menu-sold-out-button')) {
+        toggleSoldOut(e);
+        return;
+      }
+    });
+
+    // 메뉴판 이동 이벤트
+    $('nav').addEventListener('click', (e) => {
+      const isCategoryButton =
+        e.target.classList.contains('cafe-category-name');
+      if (isCategoryButton) {
+        renderMenuByCategory(e.target);
+      }
+    });
+  };
 }
 
 const app = new App();
