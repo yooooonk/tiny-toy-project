@@ -1,28 +1,60 @@
-/*
-const element = (
-    <div id="foo">
-      <a>bar</a>
-      <b />
-    </div>
-  )
-  const container = document.getElementById("root")
-  ReactDOM.render(element, container)
-
-  */
-
-const container = document.getElementById('root');
-
-// 1. createElement
 function createElement(type, props, ...children) {
   return {
     type,
     props: {
       ...props,
-      children
+      children: children.map((child) =>
+        typeof child === 'object' ? child : createTextElement(child)
+      )
     }
   };
 }
 
-// 2. render
+function createTextElement(text) {
+  return {
+    type: 'TEXT_ELEMENT',
+    props: {
+      nodeValue: text,
+      children: []
+    }
+  };
+}
 
-// React.render(element,container)
+function render(element, container) {
+  const dom =
+    element.type == 'TEXT_ELEMENT'
+      ? document.createTextNode('')
+      : document.createElement(element.type);
+  const isProperty = (key) => key !== 'children';
+  console.log(element.props);
+  Object.keys(element.props)
+    .filter(isProperty)
+    .forEach((name) => {
+      dom[name] = element.props[name];
+    });
+  element.props.children.forEach((child) => render(child, dom));
+  container.appendChild(dom);
+}
+
+const Hiact = {
+  createElement,
+  render
+};
+
+/** jsx Didact.createElement */
+// const element = (
+//   <div style="background: salmon">
+//     <h1>Hello World</h1>
+//     <h2 style="text-align:right">from Didact</h2>
+//   </div>
+// );
+
+const element = Hiact.createElement(
+  'div',
+  { style: 'background:salmon' },
+  Hiact.createElement('h1', null, 'Hello World'),
+  Hiact.createElement('h2', { style: 'text-align:right' }, 'from gisele')
+);
+
+const container = document.getElementById('root');
+Hiact.render(element, container);
